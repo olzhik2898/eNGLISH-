@@ -1,0 +1,20 @@
+{
+  "peppa": [
+    {
+      "english": "Hello",
+      "kazakh": "Сәлем",
+      "category": "greetings",
+      "audio": "hello.mp3",
+      "image": "hello.jpg"
+    }
+  ],
+  "mickey": [
+    {
+      "english": "Mouse",
+      "kazakh": "Тышқан", 
+      "category": "animals",
+      "audio": "mouse.mp3",
+      "image": "mickey.jpg"
+    }
+  ]
+}

@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JuniorLingo - Learn English with Cartoons and Fairy Tales</title>
+  <title>JuniorLingo - Learn English with Cartoons</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Floating letters background -->
+  <!-- Floating background elements -->
   <div class="floating-letters" id="floatingLetters"></div>
+  <div class="floating-title">JuniorLingo</div>
   
   <header>
     <div class="brand">JuniorLingo</div>
@@ -20,59 +21,63 @@
   </header>
 
   <main>
-    <h1>Learn English with Cartoons and Fairy Tales</h1>
-    <p>Fun lessons for young explorers!</p>
+    <div class="hero-section">
+      <h1>Learn English with Cartoons and Fairy Tales</h1>
+      <p>Fun interactive lessons for young explorers! Watch videos, learn vocabulary, and test your knowledge.</p>
+    </div>
 
     <section id="cartoons">
-      <h2>Cartoons</h2>
+      <h2>Popular Cartoons</h2>
       <div class="grid">
-        <div class="card"><a href="#">Peppa Pig — сүйікті кейіпкерлеріңізбен ағылшын тілін үйреніңіз →</a></div>
-        <div class="card"><a href="#">Mickey Mouse — Микки Маус әңгімелері →</a></div>
-        <div class="card"><a href="#">Mickey and Donald Have a Farm — Микки мен Дональдтың фермадағы шытырман оқиғасы →</a></div>
-        <div class="card"><a href="#">Pluto's Puppy-Sitting Adventure — Плутоның күшіктерді күтуі туралы қызықты оқиғалар →</a></div>
+        <div class="card">
+          <div class="card-icon">🐷</div>
+          <h3>Peppa Pig</h3>
+          <p>Learn with Peppa and her family adventures</p>
+          <a href="peppa-pig.html" class="card-link">Start Learning →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">🐭</div>
+          <h3>Mickey Mouse</h3>
+          <p>Join Mickey and friends in fun stories</p>
+          <a href="mickey-mouse.html" class="card-link">Start Learning →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">🐾</div>
+          <h3>Paw Patrol</h3>
+          <p>Adventure with the rescue patrol team</p>
+          <a href="paw-patrol.html" class="card-link">Start Learning →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">🎒</div>
+          <h3>Dora Explorer</h3>
+          <p>Explore and learn with Dora</p>
+          <a href="dora-explorer.html" class="card-link">Start Learning →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">🧽</div>
+          <h3>SpongeBob</h3>
+          <p>Underwater adventures with SpongeBob</p>
+          <a href="spongebob.html" class="card-link">Start Learning →</a>
+        </div>
       </div>
-    </section>
-
-    <section id="fairy">
-      <h2>Fairy Tales</h2>
-      <div class="grid">
-        <div class="card"><a href="#">The wind and the sun — жел мен күн →</a></div>
-        <div class="card"><a href="#">The Fox and the Crow — Түлкі мен қарға →</a></div>
-        <div class="card"><a href="#">Rapunzel — Рапунцель туралы ертегі →</a></div>
-        <div class="card"><a href="#">The oak tree — Емен ағашы →</a></div>
-        <div class="card"><a href="#">Frozen — Мұзды өлке: апалы-сіңлі Эльза мен Аннаның тарихы →</a></div>
-      </div>
-    </section>
-
-    <section id="about">
-      <h2>About the Project</h2>
-      <p>This website is designed to help primary school students improve their English language skills in a fun and engaging way. The platform is divided into two main sections: Cartoons and Fairy Tales.</p>
-
-      <h3>Short Video Clips</h3>
-      <p>Watch 4-5 minute video clips from YouTube, carefully selected to introduce new vocabulary and grammatical structures.</p>
-
-      <h3>Interactive Tasks</h3>
-      <p>Complete tasks to practice what you've learned and answer questions to reinforce your understanding.</p>
-
-      <h3>Our Goal</h3>
-      <p>Enhance students' attention and concentration while increasing their interest in learning English.</p>
-
-      <h3>Learning Approach</h3>
-      <p>Using entertaining and educational content to make language learning enjoyable and effective for young learners.</p>
     </section>
 
     <footer>
-      © 2025 JuniorLingo<br/>
-      Contact us: <a href="mailto:shynar.nasibolla.02@mail.ru">shynar.nasibolla.02@mail.ru</a>
+      © 2025 JuniorLingo - Learn English Fun Way<br/>
+      Contact: <a href="mailto:shynar.nasibolla.02@mail.ru">shynar.nasibolla.02@mail.ru</a>
     </footer>
   </main>
 
   <script>
-    // Create floating letters
     document.addEventListener('DOMContentLoaded', function() {
+      // Create floating letters
       const container = document.getElementById('floatingLetters');
       const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      const letterCount = 30;
+      const letterCount = 40;
       
       for (let i = 0; i < letterCount; i++) {
         const letter = document.createElement('div');
@@ -80,8 +85,9 @@
         letter.textContent = letters[Math.floor(Math.random() * letters.length)];
         letter.style.left = Math.random() * 100 + 'vw';
         letter.style.top = Math.random() * 100 + 'vh';
-        letter.style.animationDelay = Math.random() * 5 + 's';
-        letter.style.fontSize = (Math.random() * 20 + 16) + 'px';
+        letter.style.animationDelay = Math.random() * 8 + 's';
+        letter.style.fontSize = (Math.random() * 25 + 12) + 'px';
+        letter.style.opacity = Math.random() * 0.3 + 0.1;
         container.appendChild(letter);
       }
     });

@@ -1,200 +1,64 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Свинка Пеппа - Опросник</title>
+    <title>Learn with Peppa Pig</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            background: linear-gradient(135deg, #ff9eb5, #7ec8e3);
-        }
-        
-        .container {
-            background-color: rgba(255, 255, 255, 0.95);
-            border: 5px solid #ff9eb5;
-        }
-        
-        h1 {
-            color: #ff6b93;
-            text-shadow: 2px 2px 0 #ffd1dc;
-        }
-        
-        .section-title {
-            color: #ff6b93;
-        }
-        
-        .option.selected {
-            background-color: #ff6b93;
-            border-color: #ffd1dc;
-        }
-        
-        #checkAnswers {
-            background-color: #ff6b93;
-        }
-        
-        #checkAnswers:hover {
-            background-color: #ff4d7d;
-        }
-        
-        .character-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .character-header img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 5px solid #ff9eb5;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+    <link rel="stylesheet" href="peppa-pig.css">
 </head>
-<body>
-    <div class="container">
-        <div class="character-header">
-            <h1>Свинка Пеппа</h1>
-            <div style="font-size: 3rem; margin: 20px 0;">🐷</div>
-        </div>
-        
-        <div class="section" id="family">
-            <div class="section-title">
-                <span class="character-icon">👨‍👩‍👧‍👦</span> Family
+<body class="peppa-theme">
+    <header class="lesson-header">
+        <h1><i class="fas fa-piggy-bank"></i> Learning with Peppa Pig</h1>
+        <button class="back-button" onclick="goHome()">← Back to Home</button>
+    </header>
+
+    <div class="lesson-container">
+        <!-- Видео урок -->
+        <section class="video-lesson">
+            <h2>Watch & Learn</h2>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/..." frameborder="0" allowfullscreen></iframe>
             </div>
-            <div class="options-container">
-                <div class="option" data-correct="true">Daddy Pig</div>
-                <div class="option" data-correct="true">Mummy Pig</div>
-                <div class="option" data-correct="true">George</div>
-                <div class="option" data-correct="false">Grandma Sheep</div>
+        </section>
+
+        <!-- Словарь -->
+        <section class="vocabulary">
+            <h2>New Words</h2>
+            <div class="word-cards">
+                <div class="word-card">
+                    <span class="english">Hello</span>
+                    <span class="translation">Сәлем</span>
+                    <button class="speak-btn"><i class="fas fa-volume-up"></i></button>
+                </div>
+                <!-- ... другие слова -->
             </div>
-        </div>
-        
-        <div class="section" id="friends">
-            <div class="section-title">
-                <span class="character-icon">👫</span> Friends
+        </section>
+
+        <!-- Игры -->
+        <section class="games-section">
+            <h2>Practice Games</h2>
+            <div class="game" id="wordMatchGame">
+                <!-- Игра "Собери слова" -->
             </div>
-            <div class="options-container">
-                <div class="option" data-correct="true">Suzy Sheep</div>
-                <div class="option" data-correct="false">Danny Dog</div>
-                <div class="option" data-correct="true">Rebecca Rabbit</div>
-                <div class="option" data-correct="false">Candy Cat</div>
+            <div class="game" id="sentenceBuilder">
+                <!-- Игра "Составь предложение" -->
             </div>
-        </div>
-        
-        <div class="section" id="activities">
-            <div class="section-title">
-                <span class="character-icon">🎮</span> Activities
+        </section>
+
+        <!-- Тест -->
+        <section class="quiz-section">
+            <h2>Final Quiz</h2>
+            <div class="quiz" id="peppaQuiz">
+                <!-- Вопросы с вариантами ответов -->
             </div>
-            <div class="options-container">
-                <div class="option" data-correct="true">Jumping in muddy puddles</div>
-                <div class="option" data-correct="false">Swimming in the sea</div>
-                <div class="option" data-correct="true">Playing with George</div>
-                <div class="option" data-correct="false">Riding a bicycle</div>
-            </div>
-        </div>
-        
-        <div class="buttons">
-            <button id="checkAnswers">Проверить ответы</button>
-            <button id="resetQuiz">Начать заново</button>
-        </div>
-        
-        <div class="results" id="results">
-            <div class="score" id="score">Ваш результат: 0/0</div>
-            <div id="feedback" class="feedback"></div>
-        </div>
+            <button class="finish-lesson" onclick="completePeppaLesson()">
+                Finish Lesson & Get Spin!
+            </button>
+        </section>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const options = document.querySelectorAll('.option');
-            const checkButton = document.getElementById('checkAnswers');
-            const resetButton = document.getElementById('resetQuiz');
-            const results = document.getElementById('results');
-            const scoreElement = document.getElementById('score');
-            const feedbackElement = document.getElementById('feedback');
-            
-            const savedSelections = JSON.parse(localStorage.getItem('peppaSelections')) || {};
-            
-            options.forEach(option => {
-                const sectionId = option.closest('.section').id;
-                const optionText = option.textContent;
-                
-                if (savedSelections[sectionId] && savedSelections[sectionId].includes(optionText)) {
-                    option.classList.add('selected');
-                }
-                
-                option.addEventListener('click', function() {
-                    this.classList.toggle('selected');
-                    saveSelections();
-                });
-            });
-            
-            function saveSelections() {
-                const selections = {};
-                
-                document.querySelectorAll('.section').forEach(section => {
-                    const sectionId = section.id;
-                    const selectedOptions = Array.from(section.querySelectorAll('.option.selected'))
-                        .map(option => option.textContent);
-                    
-                    selections[sectionId] = selectedOptions;
-                });
-                
-                localStorage.setItem('peppaSelections', JSON.stringify(selections));
-            }
-            
-            checkButton.addEventListener('click', function() {
-                let correctCount = 0;
-                let totalCorrect = 0;
-                
-                options.forEach(option => {
-                    if (option.dataset.correct === 'true') {
-                        totalCorrect++;
-                    }
-                });
-                
-                options.forEach(option => {
-                    if (option.classList.contains('selected')) {
-                        if (option.dataset.correct === 'true') {
-                            option.classList.add('correct');
-                            correctCount++;
-                        } else {
-                            option.classList.add('incorrect');
-                        }
-                    } else if (option.dataset.correct === 'true') {
-                        option.classList.add('correct');
-                    }
-                });
-                
-                const percentage = Math.round((correctCount / totalCorrect) * 100);
-                scoreElement.textContent = `Ваш результат: ${correctCount}/${totalCorrect} (${percentage}%)`;
-                
-                let feedback = '';
-                if (percentage === 100) {
-                    feedback = 'Ура! Отлично! Хрю-хрю!';
-                } else if (percentage >= 80) {
-                    feedback = 'Хорошая работа! Прыгаем по лужам от радости!';
-                } else if (percentage >= 60) {
-                    feedback = 'Неплохо! Но можно лучше!';
-                } else {
-                    feedback = 'Не расстраивайся! Попробуй еще раз!';
-                }
-                
-                feedbackElement.textContent = feedback;
-                results.classList.add('show');
-                results.scrollIntoView({ behavior: 'smooth' });
-            });
-            
-            resetButton.addEventListener('click', function() {
-                options.forEach(option => {
-                    option.classList.remove('selected', 'correct', 'incorrect');
-                });
-                
-                results.classList.remove('show');
-                localStorage.removeItem('peppaSelections');
-            });
-        });
-    </script>
+    <script src="peppa-pig.js"></script>
+    <script src="games/word-match.js"></script>
+    <script src="games/sentence-builder.js"></script>
 </body>
 </html>

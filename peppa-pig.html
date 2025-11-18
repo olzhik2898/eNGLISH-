@@ -1,712 +1,200 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Peppa Pig - Picnic - JuniorLingo</title>
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* Accordion Styles */
-    .accordion-container {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      box-shadow: var(--shadow-lg);
-      margin-bottom: 3rem;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .accordion-section {
-      border-bottom: 1px solid var(--border);
-    }
-
-    .accordion-section:last-child {
-      border-bottom: none;
-    }
-
-    .accordion-header {
-      padding: 1.5rem 2rem;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      background: var(--surface);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .accordion-header:hover {
-      background: var(--background);
-    }
-
-    .accordion-header h3 {
-      color: var(--primary);
-      margin: 0;
-      font-size: 1.4rem;
-    }
-
-    .accordion-content {
-      display: none;
-      background: var(--background);
-    }
-
-    .accordion-content.show {
-      display: block;
-      padding: 2.5rem;
-    }
-
-    /* Vocabulary List Styles */
-    .vocabulary-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .vocabulary-item {
-      background: var(--surface);
-      border-radius: 12px;
-      padding: 1rem;
-      border: 2px solid var(--border);
-      transition: all 0.3s;
-    }
-
-    .vocabulary-checkbox {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    .vocabulary-checkbox input {
-      display: none;
-    }
-
-    .checkmark {
-      width: 24px;
-      height: 24px;
-      border: 2px solid var(--border);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 0.25rem;
-      transition: all 0.3s;
-    }
-
-    .vocabulary-checkbox.checked .checkmark {
-      background: var(--secondary);
-      border-color: var(--secondary);
-    }
-
-    .vocabulary-checkbox.checked .checkmark::after {
-      content: '✓';
-      color: white;
-      font-weight: bold;
-    }
-
-    .vocabulary-checkbox.checked .vocabulary-word {
-      color: var(--secondary);
-      text-decoration: line-through;
-      opacity: 0.7;
-    }
-
-    .vocabulary-content {
-      flex: 1;
-    }
-
-    .vocabulary-word {
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: var(--primary);
-      margin-bottom: 0.25rem;
-    }
-
-    .vocabulary-transcription {
-      font-family: 'Courier New', monospace;
-      color: var(--accent);
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-
-    .vocabulary-translation {
-      color: var(--text-light);
-      font-style: italic;
-      margin-bottom: 0.5rem;
-    }
-
-    .vocabulary-definition {
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    /* Questions Styles */
-    .questions-list {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .question-item {
-      background: var(--surface);
-      padding: 1.5rem;
-      border-radius: 12px;
-      border-left: 4px solid var(--accent);
-    }
-
-    .question-text {
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--text);
-    }
-
-    .answer-options {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .answer-option {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem;
-      background: var(--background);
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .answer-option:hover {
-      border-color: var(--primary);
-    }
-
-    .answer-option.correct {
-      background: #d1fae5;
-      border-color: var(--secondary);
-    }
-
-    .answer-option.incorrect {
-      background: #fef2f2;
-      border-color: #ef4444;
-    }
-
-    .answer-option.selected {
-      border-color: var(--primary);
-    }
-
-    /* Lesson Header */
-    .lesson-header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      padding: 3rem 2rem;
-      border-radius: 24px;
-      margin-bottom: 3rem;
-      text-align: center;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .lesson-header h1 {
-      color: var(--primary);
-      margin-bottom: 1rem;
-    }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      padding: 1rem 2rem;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      transition: all 0.3s;
-    }
-
-    .back-link:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    /* Video Section */
-    .video-section {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      padding: 2.5rem;
-      border-radius: 24px;
-      box-shadow: var(--shadow-lg);
-      margin-bottom: 3rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .section-title {
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-    }
-
-    .video-container {
-      position: relative;
-      width: 100%;
-      height: 0;
-      padding-bottom: 56.25%;
-      margin-bottom: 1.5rem;
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    /* Progress and Navigation */
-    .lesson-progress {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 3rem;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
-      box-shadow: var(--shadow-lg);
-    }
-
-    .progress-btn {
-      padding: 1rem 2rem;
-      background: var(--primary);
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
-
-    .progress-btn:hover {
-      background: var(--primary-dark);
-    }
-
-    .progress-btn:disabled {
-      background: var(--text-light);
-      cursor: not-allowed;
-    }
-
-    .progress-info {
-      text-align: center;
-      color: var(--text-light);
-      font-weight: 600;
-    }
-
-    .check-answers-btn {
-      background: var(--secondary);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: block;
-      margin: 2rem auto;
-    }
-
-    .check-answers-btn:hover {
-      background: #059669;
-    }
-
-    .quiz-result {
-      margin-top: 1.5rem;
-      padding: 1.5rem;
-      border-radius: 12px;
-      text-align: center;
-      font-weight: 600;
-    }
-
-    .quiz-result.success {
-      background: #d1fae5;
-      border: 2px solid var(--secondary);
-      color: #065f46;
-    }
-
-    .quiz-result.error {
-      background: #fef2f2;
-      border: 2px solid #ef4444;
-      color: #dc2626;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свинка Пеппа - Опросник</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff9eb5, #7ec8e3);
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 5px solid #ff9eb5;
+        }
+        
+        h1 {
+            color: #ff6b93;
+            text-shadow: 2px 2px 0 #ffd1dc;
+        }
+        
+        .section-title {
+            color: #ff6b93;
+        }
+        
+        .option.selected {
+            background-color: #ff6b93;
+            border-color: #ffd1dc;
+        }
+        
+        #checkAnswers {
+            background-color: #ff6b93;
+        }
+        
+        #checkAnswers:hover {
+            background-color: #ff4d7d;
+        }
+        
+        .character-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .character-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #ff9eb5;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 <body>
-  <div class="floating-letters" id="floatingLetters"></div>
-  <div class="floating-title">Peppa Pig</div>
-  
-  <header>
-    <div class="brand">JuniorLingo</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="index.html#cartoons">Cartoons</a>
-      <a href="index.html#about">About Us</a>
-    </nav>
-  </header>
-
-  <main>
-    <a href="index.html" class="back-link">← Back to Cartoons</a>
-    
-    <div class="lesson-header">
-      <h1>Peppa Pig - Picnic (full episode)</h1>
-      <p>Learn English with Peppa Pig's picnic adventure!</p>
-    </div>
-
-    <section class="video-section">
-      <h2 class="section-title">🎬 Full Episode</h2>
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/pxnd1Etmhf4" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-      </div>
-    </section>
-
-    <div class="accordion-container">
-      <!-- Vocabulary Section -->
-      <div class="accordion-section">
-        <div class="accordion-header active">
-          <h3>Vocabulary ▲</h3>
+    <div class="container">
+        <div class="character-header">
+            <h1>Свинка Пеппа</h1>
+            <div style="font-size: 3rem; margin: 20px 0;">🐷</div>
         </div>
-        <div class="accordion-content show">
-          <div class="vocabulary-list">
-            <div class="vocabulary-item">
-              <label class="vocabulary-checkbox">
-                <input type="checkbox">
-                <span class="checkmark"></span>
-                <div class="vocabulary-content">
-                  <span class="vocabulary-word">Picnic</span>
-                  <span class="vocabulary-transcription">/ˈpɪk.nɪk/</span>
-                  <span class="vocabulary-translation">Пикник</span>
-                  <p class="vocabulary-definition">A meal eaten outdoors, usually in a park or on a trip.</p>
-                </div>
-              </label>
-            </div>
-
-            <div class="vocabulary-item">
-              <label class="vocabulary-checkbox">
-                <input type="checkbox">
-                <span class="checkmark"></span>
-                <div class="vocabulary-content">
-                  <span class="vocabulary-word">Basket</span>
-                  <span class="vocabulary-transcription">/ˈbæs.kɪt/</span>
-                  <span class="vocabulary-translation">Себет</span>
-                  <p class="vocabulary-definition">A container made of woven material, used to carry things.</p>
-                </div>
-              </label>
-            </div>
-
-            <div class="vocabulary-item">
-              <label class="vocabulary-checkbox">
-                <input type="checkbox">
-                <span class="checkmark"></span>
-                <div class="vocabulary-content">
-                  <span class="vocabulary-word">Tummy</span>
-                  <span class="vocabulary-transcription">/ˈtʌm.i/</span>
-                  <span class="vocabulary-translation">Іш</span>
-                  <p class="vocabulary-definition">An informal word for stomach.</p>
-                </div>
-              </label>
-            </div>
-
-            <div class="vocabulary-item">
-              <label class="vocabulary-checkbox">
-                <input type="checkbox">
-                <span class="checkmark"></span>
-                <div class="vocabulary-content">
-                  <span class="vocabulary-word">Tease</span>
-                  <span class="vocabulary-transcription">/tiːz/</span>
-                  <span class="vocabulary-translation">Мазақтау</span>
-                  <p class="vocabulary-definition">To make fun of someone in a playful way.</p>
-                </div>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Questions Section -->
-      <div class="accordion-section">
-        <div class="accordion-header">
-          <h3>Questions ▼</h3>
-        </div>
-        <div class="accordion-content">
-          <div class="questions-list">
-            <div class="question-item">
-              <p class="question-text">1. Where did Peppa and her family go for the picnic?</p>
-              <div class="answer-options">
-                <label class="answer-option" data-correct="true">
-                  <input type="radio" name="q1" value="park">
-                  <span>To the park</span>
-                </label>
-                <label class="answer-option">
-                  <input type="radio" name="q1" value="beach">
-                  <span>To the beach</span>
-                </label>
-                <label class="answer-option">
-                  <input type="radio" name="q1" value="forest">
-                  <span>To the forest</span>
-                </label>
-              </div>
-            </div>
-
-            <div class="question-item">
-              <p class="question-text">2. What did they bring in the basket? (Select all that apply)</p>
-              <div class="answer-options">
-                <label class="answer-option" data-correct="true">
-                  <input type="checkbox" name="q2" value="sandwiches">
-                  <span>Sandwiches</span>
-                </label>
-                <label class="answer-option" data-correct="true">
-                  <input type="checkbox" name="q2" value="juice">
-                  <span>Juice</span>
-                </label>
-                <label class="answer-option">
-                  <input type="checkbox" name="q2" value="pizza">
-                  <span>Pizza</span>
-                </label>
-                <label class="answer-option" data-correct="true">
-                  <input type="checkbox" name="q2" value="cake">
-                  <span>Cake</span>
-                </label>
-              </div>
-            </div>
-
-            <div class="question-item">
-              <p class="question-text">3. Who found the ants?</p>
-              <div class="answer-options">
-                <label class="answer-option">
-                  <input type="radio" name="q3" value="peppa">
-                  <span>Peppa</span>
-                </label>
-                <label class="answer-option" data-correct="true">
-                  <input type="radio" name="q3" value="george">
-                  <span>George</span>
-                </label>
-                <label class="answer-option">
-                  <input type="radio" name="q3" value="daddy">
-                  <span>Daddy Pig</span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <button class="check-answers-btn">Check Answers</button>
-          <div class="quiz-result" id="quizResult"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="lesson-progress">
-      <button class="progress-btn" id="prevBtn" disabled>Previous Lesson</button>
-      <div class="progress-info">Lesson 1 of 3</div>
-      <button class="progress-btn" id="nextBtn">Show Answers & Next Lesson</button>
-    </div>
-  </main>
-
-  <footer>
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>JuniorLingo</h3>
-        <p>Making English learning fun and engaging for children through cartoons and interactive lessons.</p>
-      </div>
-      <div class="footer-section">
-        <h3>Quick Links</h3>
-        <a href="index.html">Home</a>
-        <a href="index.html#cartoons">Cartoons</a>
-        <a href="index.html#about">About</a>
-      </div>
-      <div class="footer-section">
-        <h3>Contact</h3>
-        <p>Email: <a href="mailto:shynar.nasibolla.02@mail.ru">shynar.nasibolla.02@mail.ru</a></p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      © 2025 JuniorLingo - Learn English Fun Way. All rights reserved.
-    </div>
-  </footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Floating letters
-      const container = document.getElementById('floatingLetters');
-      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      const letterCount = 30;
-      
-      for (let i = 0; i < letterCount; i++) {
-        const letter = document.createElement('div');
-        letter.className = 'letter';
-        letter.textContent = letters[Math.floor(Math.random() * letters.length)];
-        letter.style.left = Math.random() * 100 + 'vw';
-        letter.style.top = Math.random() * 100 + 'vh';
-        letter.style.animationDelay = Math.random() * 8 + 's';
-        letter.style.fontSize = (Math.random() * 25 + 12) + 'px';
-        letter.style.opacity = Math.random() * 0.3 + 0.1;
-        container.appendChild(letter);
-      }
-
-      // Accordion functionality
-      const accordionHeaders = document.querySelectorAll('.accordion-header');
-      
-      accordionHeaders.forEach(header => {
-        header.addEventListener('click', function() {
-          const content = this.nextElementSibling;
-          const isActive = content.classList.contains('show');
-          
-          document.querySelectorAll('.accordion-content').forEach(acc => {
-            acc.classList.remove('show');
-          });
-          document.querySelectorAll('.accordion-header h3').forEach(h3 => {
-            h3.textContent = h3.textContent.replace('▲', '▼');
-          });
-          
-          if (!isActive) {
-            content.classList.add('show');
-            this.querySelector('h3').textContent = this.querySelector('h3').textContent.replace('▼', '▲');
-          }
-        });
-      });
-
-      // Vocabulary checkboxes
-      const vocabCheckboxes = document.querySelectorAll('.vocabulary-checkbox input');
-      vocabCheckboxes.forEach(checkbox => {
-        const word = checkbox.closest('.vocabulary-item').querySelector('.vocabulary-word').textContent;
-        const savedState = localStorage.getItem(`peppa_${word}`);
-        if (savedState === 'checked') {
-          checkbox.checked = true;
-          checkbox.closest('.vocabulary-checkbox').classList.add('checked');
-        }
         
-        checkbox.addEventListener('change', function() {
-          const label = this.closest('.vocabulary-checkbox');
-          const word = label.querySelector('.vocabulary-word').textContent;
-          
-          if (this.checked) {
-            label.classList.add('checked');
-            localStorage.setItem(`peppa_${word}`, 'checked');
-          } else {
-            label.classList.remove('checked');
-            localStorage.setItem(`peppa_${word}`, 'unchecked');
-          }
-        });
-      });
-
-      // Answer selection
-      const answerOptions = document.querySelectorAll('.answer-option');
-      let answersChecked = false;
-
-      answerOptions.forEach(option => {
-        const input = option.querySelector('input');
+        <div class="section" id="family">
+            <div class="section-title">
+                <span class="character-icon">👨‍👩‍👧‍👦</span> Family
+            </div>
+            <div class="options-container">
+                <div class="option" data-correct="true">Daddy Pig</div>
+                <div class="option" data-correct="true">Mummy Pig</div>
+                <div class="option" data-correct="true">George</div>
+                <div class="option" data-correct="false">Grandma Sheep</div>
+            </div>
+        </div>
         
-        option.addEventListener('click', function() {
-          if (answersChecked) return;
-          
-          if (input.type === 'radio') {
-            // For radio buttons, deselect all others in the same question
-            const question = this.closest('.question-item');
-            question.querySelectorAll('.answer-option').forEach(opt => {
-              opt.classList.remove('selected');
-            });
-          }
-          
-          if (input.type === 'checkbox') {
-            input.checked = !input.checked;
-          } else {
-            input.checked = true;
-          }
-          
-          this.classList.toggle('selected', input.checked);
-        });
-      });
+        <div class="section" id="friends">
+            <div class="section-title">
+                <span class="character-icon">👫</span> Friends
+            </div>
+            <div class="options-container">
+                <div class="option" data-correct="true">Suzy Sheep</div>
+                <div class="option" data-correct="false">Danny Dog</div>
+                <div class="option" data-correct="true">Rebecca Rabbit</div>
+                <div class="option" data-correct="false">Candy Cat</div>
+            </div>
+        </div>
+        
+        <div class="section" id="activities">
+            <div class="section-title">
+                <span class="character-icon">🎮</span> Activities
+            </div>
+            <div class="options-container">
+                <div class="option" data-correct="true">Jumping in muddy puddles</div>
+                <div class="option" data-correct="false">Swimming in the sea</div>
+                <div class="option" data-correct="true">Playing with George</div>
+                <div class="option" data-correct="false">Riding a bicycle</div>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button id="checkAnswers">Проверить ответы</button>
+            <button id="resetQuiz">Начать заново</button>
+        </div>
+        
+        <div class="results" id="results">
+            <div class="score" id="score">Ваш результат: 0/0</div>
+            <div id="feedback" class="feedback"></div>
+        </div>
+    </div>
 
-      // Check answers button
-      const checkAnswersBtn = document.querySelector('.check-answers-btn');
-      const quizResult = document.getElementById('quizResult');
-      const nextBtn = document.getElementById('nextBtn');
-
-      checkAnswersBtn.addEventListener('click', function() {
-        answersChecked = true;
-        let correctAnswers = 0;
-        let totalQuestions = 0;
-
-        document.querySelectorAll('.question-item').forEach(question => {
-          totalQuestions++;
-          const correctOptions = question.querySelectorAll('.answer-option[data-correct="true"]');
-          let questionCorrect = true;
-
-          correctOptions.forEach(correctOption => {
-            const input = correctOption.querySelector('input');
-            if (!input.checked) {
-              questionCorrect = false;
-            }
-          });
-
-          // Check for incorrect selections
-          const allOptions = question.querySelectorAll('.answer-option');
-          allOptions.forEach(option => {
-            const input = option.querySelector('input');
-            const isCorrect = option.dataset.correct === 'true';
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const options = document.querySelectorAll('.option');
+            const checkButton = document.getElementById('checkAnswers');
+            const resetButton = document.getElementById('resetQuiz');
+            const results = document.getElementById('results');
+            const scoreElement = document.getElementById('score');
+            const feedbackElement = document.getElementById('feedback');
             
-            if (input.checked) {
-              if (isCorrect) {
-                option.classList.add('correct');
-              } else {
-                option.classList.add('incorrect');
-                questionCorrect = false;
-              }
-            } else if (isCorrect) {
-              option.classList.add('correct');
+            const savedSelections = JSON.parse(localStorage.getItem('peppaSelections')) || {};
+            
+            options.forEach(option => {
+                const sectionId = option.closest('.section').id;
+                const optionText = option.textContent;
+                
+                if (savedSelections[sectionId] && savedSelections[sectionId].includes(optionText)) {
+                    option.classList.add('selected');
+                }
+                
+                option.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    saveSelections();
+                });
+            });
+            
+            function saveSelections() {
+                const selections = {};
+                
+                document.querySelectorAll('.section').forEach(section => {
+                    const sectionId = section.id;
+                    const selectedOptions = Array.from(section.querySelectorAll('.option.selected'))
+                        .map(option => option.textContent);
+                    
+                    selections[sectionId] = selectedOptions;
+                });
+                
+                localStorage.setItem('peppaSelections', JSON.stringify(selections));
             }
-          });
-
-          if (questionCorrect) {
-            correctAnswers++;
-          }
+            
+            checkButton.addEventListener('click', function() {
+                let correctCount = 0;
+                let totalCorrect = 0;
+                
+                options.forEach(option => {
+                    if (option.dataset.correct === 'true') {
+                        totalCorrect++;
+                    }
+                });
+                
+                options.forEach(option => {
+                    if (option.classList.contains('selected')) {
+                        if (option.dataset.correct === 'true') {
+                            option.classList.add('correct');
+                            correctCount++;
+                        } else {
+                            option.classList.add('incorrect');
+                        }
+                    } else if (option.dataset.correct === 'true') {
+                        option.classList.add('correct');
+                    }
+                });
+                
+                const percentage = Math.round((correctCount / totalCorrect) * 100);
+                scoreElement.textContent = `Ваш результат: ${correctCount}/${totalCorrect} (${percentage}%)`;
+                
+                let feedback = '';
+                if (percentage === 100) {
+                    feedback = 'Ура! Отлично! Хрю-хрю!';
+                } else if (percentage >= 80) {
+                    feedback = 'Хорошая работа! Прыгаем по лужам от радости!';
+                } else if (percentage >= 60) {
+                    feedback = 'Неплохо! Но можно лучше!';
+                } else {
+                    feedback = 'Не расстраивайся! Попробуй еще раз!';
+                }
+                
+                feedbackElement.textContent = feedback;
+                results.classList.add('show');
+                results.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            resetButton.addEventListener('click', function() {
+                options.forEach(option => {
+                    option.classList.remove('selected', 'correct', 'incorrect');
+                });
+                
+                results.classList.remove('show');
+                localStorage.removeItem('peppaSelections');
+            });
         });
-
-        const percentage = Math.round((correctAnswers / totalQuestions) * 100);
-        
-        quizResult.style.display = 'block';
-        if (percentage === 100) {
-          quizResult.className = 'quiz-result success';
-          quizResult.innerHTML = `🎉 Perfect! You got ${correctAnswers}/${totalQuestions} correct!`;
-        } else if (percentage >= 70) {
-          quizResult.className = 'quiz-result success';
-          quizResult.innerHTML = `👍 Good job! You got ${correctAnswers}/${totalQuestions} correct!`;
-        } else {
-          quizResult.className = 'quiz-result error';
-          quizResult.innerHTML = `📚 Keep practicing! You got ${correctAnswers}/${totalQuestions} correct.`;
-        }
-
-        checkAnswersBtn.style.display = 'none';
-      });
-
-      // Next button functionality
-      nextBtn.addEventListener('click', function() {
-        if (!answersChecked) {
-          checkAnswersBtn.click();
-          return;
-        }
-        
-        // Show completion message
-        alert('🎉 Lesson completed! Moving to next lesson...');
-        // In a real app, this would navigate to the next lesson
-        // window.location.href = 'peppa-pig-2.html';
-      });
-    });
-  </script>
+    </script>
 </body>
 </html>

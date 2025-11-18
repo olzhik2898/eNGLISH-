@@ -3,8 +3,364 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Peppa Pig Lessons - JuniorLingo</title>
+  <title>Peppa Pig - Picnic - JuniorLingo</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Accordion Styles */
+    .accordion-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 3rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .accordion-section {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .accordion-section:last-child {
+      border-bottom: none;
+    }
+
+    .accordion-header {
+      padding: 1.5rem 2rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      background: var(--surface);
+      display: flex;
+      justify-content: between;
+      align-items: center;
+    }
+
+    .accordion-header:hover {
+      background: var(--background);
+    }
+
+    .accordion-header h3 {
+      color: var(--primary);
+      margin: 0;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 0 2rem;
+      background: var(--background);
+    }
+
+    .accordion-content.show {
+      display: block;
+      padding: 2.5rem;
+    }
+
+    /* Vocabulary List Styles */
+    .vocabulary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .vocabulary-item {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 1rem;
+      border: 2px solid var(--border);
+      transition: all 0.3s;
+    }
+
+    .vocabulary-item:hover {
+      border-color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .vocabulary-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .vocabulary-checkbox input {
+      display: none;
+    }
+
+    .checkmark {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.25rem;
+      transition: all 0.3s;
+    }
+
+    .vocabulary-checkbox.checked .checkmark {
+      background: var(--secondary);
+      border-color: var(--secondary);
+    }
+
+    .vocabulary-checkbox.checked .checkmark::after {
+      content: '✓';
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .vocabulary-checkbox.checked .vocabulary-word {
+      color: var(--secondary);
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    .vocabulary-content {
+      flex: 1;
+    }
+
+    .vocabulary-word {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--primary);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .vocabulary-transcription {
+      font-family: 'Courier New', monospace;
+      color: var(--accent);
+      font-size: 1rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .vocabulary-translation {
+      color: var(--text-light);
+      font-style: italic;
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .vocabulary-definition {
+      color: var(--text);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Questions Styles */
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .question-item {
+      background: var(--surface);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border-left: 4px solid var(--accent);
+    }
+
+    .question-text {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text);
+      font-size: 1.1rem;
+    }
+
+    .answer-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .answer-option {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--background);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .answer-option:hover {
+      border-color: var(--primary);
+      background: #f0f4ff;
+    }
+
+    /* Grammar Styles */
+    .grammar-exercises {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .grammar-item {
+      background: var(--surface);
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+
+    .grammar-title {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .grammar-explanation {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .sentence-completion {
+      background: var(--background);
+      padding: 1.5rem;
+      border-radius: 8px;
+    }
+
+    .sentence {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .grammar-input {
+      padding: 0.5rem;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      font-size: 1rem;
+      width: 120px;
+    }
+
+    .grammar-input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    /* Lesson Header */
+    .lesson-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 3rem 2rem;
+      border-radius: 24px;
+      margin-bottom: 3rem;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .lesson-header h1 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 2.5rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      transition: all 0.3s;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .back-link:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Video Section */
+    .video-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 2.5rem;
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .section-title {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      margin-bottom: 1.5rem;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Progress and Navigation */
+    .lesson-progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 3rem;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .progress-btn {
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .progress-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+    }
+
+    .progress-info {
+      text-align: center;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
   <div class="floating-letters" id="floatingLetters"></div>
@@ -23,187 +379,358 @@
     <a href="index.html" class="back-link">← Back to Cartoons</a>
     
     <div class="lesson-header">
-      <h1>Peppa Pig English Lessons</h1>
-      <p>Learn English with Peppa and her family adventures!</p>
+      <h1>Peppa Pig - Picnic (full episode)</h1>
+      <p>Learn English with Peppa Pig's picnic adventure!</p>
     </div>
 
+    <!-- Video Section -->
     <section class="video-section">
-      <h2 class="section-title">🎬 Watch the Video Lesson</h2>
+      <h2 class="section-title">🎬 Full Episode</h2>
       <div class="video-container">
         <iframe src="https://www.youtube.com/embed/pxnd1Etmhf4" 
                 frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen>
         </iframe>
       </div>
-      <p><strong>Lesson Topic:</strong> Family & Friends - Learn about family members and friendship</p>
     </section>
 
-    <!-- New Vocabulary with Checkboxes -->
-    <section class="vocabulary-with-checks">
-      <div class="vocabulary-header">
-        <h2 class="section-title">📚 New Vocabulary Words</h2>
-        <div class="progress-text">Learned: <span id="learnedCount">0</span>/<span id="totalCount">0</span></div>
-      </div>
-      
-      <div class="words-grid-checkboxes">
-        <div class="word-card-checkbox" data-word="family">
-          <div class="word-checkbox"></div>
-          <div class="word-content">
-            <span class="word-english">Family</span>
-            <span class="word-transcription">/ˈfæm.ə.li/</span>
-            <span class="word-translation">Отбасы</span>
-          </div>
+    <!-- Accordion Sections -->
+    <div class="accordion-container">
+      <!-- Directions Section -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <h3>Directions ▼</h3>
         </div>
-        
-        <div class="word-card-checkbox" data-word="friend">
-          <div class="word-checkbox"></div>
-          <div class="word-content">
-            <span class="word-english">Friend</span>
-            <span class="word-transcription">/frend/</span>
-            <span class="word-translation">Дос</span>
-          </div>
-        </div>
-        
-        <div class="word-card-checkbox" data-word="play">
-          <div class="word-checkbox"></div>
-          <div class="word-content">
-            <span class="word-english">Play</span>
-            <span class="word-transcription">/pleɪ/</span>
-            <span class="word-translation">Ойнау</span>
-          </div>
-        </div>
-        
-        <div class="word-card-checkbox" data-word="happy">
-          <div class="word-checkbox"></div>
-          <div class="word-content">
-            <span class="word-english">Happy</span>
-            <span class="word-transcription">/ˈhæp.i/</span>
-            <span class="word-translation">Бақытты</span>
-          </div>
-        </div>
-        
-        <div class="word-card-checkbox" data-word="home">
-          <div class="word-checkbox"></div>
-          <div class="word-content">
-            <span class="word-english">Home</span>
-            <span class="word-transcription">/hoʊm/</span>
-            <span class="word-translation">Үй</span>
-          </div>
-        </div>
-        
-        <div class="word-card-checkbox" data-word="together">
-          <div class="word-checkbox"></div>
-          <div class="word-content">
-            <span class="word-english">Together</span>
-            <span class="word-transcription">/təˈɡeð.ər/</span>
-            <span class="word-translation">Бірге</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="vocabulary-stats">
-        <div>Your Progress</div>
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-        </div>
-        <div id="progressText">0% learned</div>
-      </div>
-    </section>
-
-    <!-- Rest of the quiz section remains the same -->
-    <section class="quiz-section">
-      <h2 class="section-title">🎯 Test Your Knowledge</h2>
-      <p>Select all correct answers for each question:</p>
-      
-      <div class="quiz-question">
-        <div class="question-text">1. Which words are related to family? (Select all that apply)</div>
-        <div class="checkbox-options">
-          <label class="checkbox-option">
-            <input type="checkbox" name="q1" value="mother">
-            <span>Mother</span>
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="q1" value="father">
-            <span>Father</span>
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="q1" value="car">
-            <span>Car</span>
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="q1" value="sister">
-            <span>Sister</span>
-          </label>
+        <div class="accordion-content">
+          <p>Watch the video and complete the exercises below. Pay attention to the vocabulary words and how they are used in the story.</p>
+          <p><strong>Learning Objectives:</strong></p>
+          <ul>
+            <li>Learn 6 new vocabulary words about picnics</li>
+            <li>Practice listening comprehension</li>
+            <li>Build sentences using new words</li>
+            <li>Discuss personal experiences</li>
+          </ul>
         </div>
       </div>
 
-      <!-- ... rest of quiz questions ... -->
+      <!-- Vocabulary Section -->
+      <div class="accordion-section">
+        <div class="accordion-header active">
+          <h3>Vocabulary ▲</h3>
+        </div>
+        <div class="accordion-content show">
+          <div class="vocabulary-list">
+            <div class="vocabulary-item">
+              <label class="vocabulary-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <div class="vocabulary-content">
+                  <span class="vocabulary-word">Picnic</span>
+                  <span class="vocabulary-transcription">/ˈpɪk.nɪk/</span>
+                  <span class="vocabulary-translation">Пикник</span>
+                  <p class="vocabulary-definition">A meal eaten outdoors, usually in a park or on a trip.</p>
+                </div>
+              </label>
+            </div>
 
-      <button class="quiz-submit">Check My Answers</button>
-      <div class="quiz-result"></div>
-    </section>
+            <div class="vocabulary-item">
+              <label class="vocabulary-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <div class="vocabulary-content">
+                  <span class="vocabulary-word">Basket</span>
+                  <span class="vocabulary-transcription">/ˈbæs.kɪt/</span>
+                  <span class="vocabulary-translation">Себет</span>
+                  <p class="vocabulary-definition">A container made of woven material, used to carry things.</p>
+                </div>
+              </label>
+            </div>
+
+            <div class="vocabulary-item">
+              <label class="vocabulary-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <div class="vocabulary-content">
+                  <span class="vocabulary-word">Tummy</span>
+                  <span class="vocabulary-transcription">/ˈtʌm.i/</span>
+                  <span class="vocabulary-translation">Іш</span>
+                  <p class="vocabulary-definition">An informal word for stomach.</p>
+                </div>
+              </label>
+            </div>
+
+            <div class="vocabulary-item">
+              <label class="vocabulary-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <div class="vocabulary-content">
+                  <span class="vocabulary-word">Tease</span>
+                  <span class="vocabulary-transcription">/tiːz/</span>
+                  <span class="vocabulary-translation">Мазақтау</span>
+                  <p class="vocabulary-definition">To make fun of someone in a playful way.</p>
+                </div>
+              </label>
+            </div>
+
+            <div class="vocabulary-item">
+              <label class="vocabulary-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <div class="vocabulary-content">
+                  <span class="vocabulary-word">Blanket</span>
+                  <span class="vocabulary-transcription">/ˈblæŋ.kɪt/</span>
+                  <span class="vocabulary-translation">Көрпе</span>
+                  <p class="vocabulary-definition">A large piece of cloth used to keep warm or sit on.</p>
+                </div>
+              </label>
+            </div>
+
+            <div class="vocabulary-item">
+              <label class="vocabulary-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <div class="vocabulary-content">
+                  <span class="vocabulary-word">Ant</span>
+                  <span class="vocabulary-transcription">/ænt/</span>
+                  <span class="vocabulary-translation">Құмырсқа</span>
+                  <p class="vocabulary-definition">A small insect that lives in large groups.</p>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Questions Section -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <h3>Questions ▼</h3>
+        </div>
+        <div class="accordion-content">
+          <div class="questions-list">
+            <div class="question-item">
+              <p class="question-text">1. Where did Peppa and her family go for the picnic?</p>
+              <div class="answer-options">
+                <label class="answer-option">
+                  <input type="radio" name="q1" value="a">
+                  <span>To the beach</span>
+                </label>
+                <label class="answer-option">
+                  <input type="radio" name="q1" value="b">
+                  <span>To the park</span>
+                </label>
+                <label class="answer-option">
+                  <input type="radio" name="q1" value="c">
+                  <span>To the forest</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-item">
+              <p class="question-text">2. What did they bring in the basket?</p>
+              <div class="answer-options">
+                <label class="answer-option">
+                  <input type="checkbox" name="q2" value="a">
+                  <span>Sandwiches</span>
+                </label>
+                <label class="answer-option">
+                  <input type="checkbox" name="q2" value="b">
+                  <span>Juice</span>
+                </label>
+                <label class="answer-option">
+                  <input type="checkbox" name="q2" value="c">
+                  <span>Cake</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-item">
+              <p class="question-text">3. Who found the ants?</p>
+              <div class="answer-options">
+                <label class="answer-option">
+                  <input type="radio" name="q3" value="a">
+                  <span>Peppa</span>
+                </label>
+                <label class="answer-option">
+                  <input type="radio" name="q3" value="b">
+                  <span>George</span>
+                </label>
+                <label class="answer-option">
+                  <input type="radio" name="q3" value="c">
+                  <span>Daddy Pig</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grammar Section -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <h3>Grammar ▼</h3>
+        </div>
+        <div class="accordion-content">
+          <div class="grammar-exercises">
+            <div class="grammar-item">
+              <p class="grammar-title">Present Simple Tense</p>
+              <p class="grammar-explanation">We use Present Simple to talk about habits and routines.</p>
+              
+              <div class="sentence-completion">
+                <p>Complete the sentences:</p>
+                <div class="sentence">
+                  Peppa <input type="text" class="grammar-input" placeholder="(to like)"> picnics.
+                </div>
+                <div class="sentence">
+                  They <input type="text" class="grammar-input" placeholder="(to bring)"> food in a basket.
+                </div>
+                <div class="sentence">
+                  George <input type="text" class="grammar-input" placeholder="(to play)"> with his toys.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Discussion Section -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <h3>Discussion ▼</h3>
+        </div>
+        <div class="accordion-content">
+          <div class="discussion-questions">
+            <p class="discussion-title">Talk about these questions:</p>
+            <ul class="discussion-list">
+              <li>Do you like picnics? Why or why not?</li>
+              <li>What is your favorite food to bring on a picnic?</li>
+              <li>Where is the best place for a picnic in your city?</li>
+              <li>Have you ever had any funny experiences during a picnic?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Script Section -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <h3>Script ▼</h3>
+        </div>
+        <div class="accordion-content">
+          <div class="script-content">
+            <p class="script-line"><strong>Peppa:</strong> It's a lovely day for a picnic!</p>
+            <p class="script-line"><strong>Daddy Pig:</strong> Yes, let's go to the park.</p>
+            <p class="script-line"><strong>Mummy Pig:</strong> I'll pack some sandwiches and juice.</p>
+            <p class="script-line"><strong>George:</strong> Dinosaur! Grrr!</p>
+            <p class="script-line"><strong>Peppa:</strong> George, don't forget your toy dinosaur.</p>
+            <p class="script-line"><strong>Narrator:</strong> Peppa Pig and her family are going on a picnic.</p>
+            <p class="script-line"><strong>Peppa:</strong> Look, ants! They want to join our picnic too!</p>
+            <p class="script-line"><strong>Daddy Pig:</strong> Oh dear, we have some little visitors.</p>
+            <p class="script-line"><strong>Mummy Pig:</strong> Let's share our cake with them.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress and Navigation -->
+    <div class="lesson-progress">
+      <a href="#" class="progress-btn" style="visibility: hidden;">Previous Lesson</a>
+      <div class="progress-info">Peppa Pig - Picnic Adventure</div>
+      <a href="peppa-pig-2.html" class="progress-btn">Next Lesson →</a>
+    </div>
   </main>
 
   <footer>
-    © 2025 JuniorLingo - Learn English Fun Way<br/>
-    Contact: <a href="mailto:shynar.nasibolla.02@mail.ru">shynar.nasibolla.02@mail.ru</a>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>JuniorLingo</h3>
+        <p>Making English learning fun and engaging for children through cartoons and interactive lessons.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <a href="index.html#cartoons">Cartoons</a>
+        <a href="index.html#fairy">Fairy Tales</a>
+        <a href="index.html#about">About</a>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Email: <a href="mailto:shynar.nasibolla.02@mail.ru">shynar.nasibolla.02@mail.ru</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 JuniorLingo - Learn English Fun Way. All rights reserved.
+    </div>
   </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Floating letters code...
+      // Enhanced floating letters
+      const container = document.getElementById('floatingLetters');
+      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const letterCount = 50;
       
-      // Vocabulary with checkboxes functionality
-      const wordCards = document.querySelectorAll('.word-card-checkbox');
-      const learnedCount = document.getElementById('learnedCount');
-      const totalCount = document.getElementById('totalCount');
-      const progressFill = document.getElementById('progressFill');
-      const progressText = document.getElementById('progressText');
+      for (let i = 0; i < letterCount; i++) {
+        const letter = document.createElement('div');
+        letter.className = 'letter';
+        letter.textContent = letters[Math.floor(Math.random() * letters.length)];
+        letter.style.left = Math.random() * 100 + 'vw';
+        letter.style.top = Math.random() * 100 + 'vh';
+        letter.style.animationDelay = Math.random() * 15 + 's';
+        letter.style.fontSize = (Math.random() * 30 + 10) + 'px';
+        letter.style.opacity = Math.random() * 0.4 + 0.1;
+        letter.style.animationDuration = (Math.random() * 20 + 20) + 's';
+        container.appendChild(letter);
+      }
+
+      // Accordion functionality
+      const accordionHeaders = document.querySelectorAll('.accordion-header');
       
-      totalCount.textContent = wordCards.length;
-      
-      // Load saved progress from localStorage
-      wordCards.forEach(card => {
-        const word = card.dataset.word;
-        const isLearned = localStorage.getItem(`word_${word}`) === 'true';
-        
-        if (isLearned) {
-          card.classList.add('learned');
-          card.querySelector('.word-checkbox').classList.add('checked');
-        }
-        
-        card.addEventListener('click', function() {
-          const checkbox = this.querySelector('.word-checkbox');
-          const word = this.dataset.word;
-          const isCurrentlyLearned = this.classList.contains('learned');
+      accordionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+          const content = this.nextElementSibling;
+          const isActive = content.classList.contains('show');
           
-          if (isCurrentlyLearned) {
-            this.classList.remove('learned');
-            checkbox.classList.remove('checked');
-            localStorage.setItem(`word_${word}`, 'false');
-          } else {
-            this.classList.add('learned');
-            checkbox.classList.add('checked');
-            localStorage.setItem(`word_${word}`, 'true');
+          // Close all accordions
+          document.querySelectorAll('.accordion-content').forEach(acc => {
+            acc.classList.remove('show');
+          });
+          document.querySelectorAll('.accordion-header h3').forEach(h3 => {
+            h3.textContent = h3.textContent.replace('▲', '▼');
+          });
+          
+          // Toggle current accordion
+          if (!isActive) {
+            content.classList.add('show');
+            this.querySelector('h3').textContent = this.querySelector('h3').textContent.replace('▼', '▲');
           }
-          
-          updateProgress();
         });
       });
-      
-      function updateProgress() {
-        const learnedWords = document.querySelectorAll('.word-card-checkbox.learned').length;
-        const totalWords = wordCards.length;
-        const percentage = Math.round((learnedWords / totalWords) * 100);
+
+      // Vocabulary checkboxes
+      const vocabCheckboxes = document.querySelectorAll('.vocabulary-checkbox input');
+      vocabCheckboxes.forEach(checkbox => {
+        // Load saved state
+        const word = checkbox.closest('.vocabulary-item').querySelector('.vocabulary-word').textContent;
+        const savedState = localStorage.getItem(`peppa_${word}`);
+        if (savedState === 'checked') {
+          checkbox.checked = true;
+          checkbox.closest('.vocabulary-checkbox').classList.add('checked');
+        }
         
-        learnedCount.textContent = learnedWords;
-        progressFill.style.width = `${percentage}%`;
-        progressText.textContent = `${percentage}% learned`;
-      }
-      
-      updateProgress();
-      
-      // Quiz functionality remains the same...
+        checkbox.addEventListener('change', function() {
+          const label = this.closest('.vocabulary-checkbox');
+          const word = label.querySelector('.vocabulary-word').textContent;
+          
+          if (this.checked) {
+            label.classList.add('checked');
+            localStorage.setItem(`peppa_${word}`, 'checked');
+          } else {
+            label.classList.remove('checked');
+            localStorage.setItem(`peppa_${word}`, 'unchecked');
+          }
+        });
+      });
     });
   </script>
 </body>

@@ -1,28 +1,63 @@
-JuniorLingo — English Learning Platform
-------------------------
-Interactive English learning website with cartoons and fairy tales.
+# Детские интерактивные опросники
 
-Files:
-- index.html : Main homepage
-- styles.css : Complete styling
-- peppa-pig.html : Peppa Pig lessons
-- mickey-mouse.html : Mickey Mouse lessons  
-- paw-patrol.html : Paw Patrol lessons
-- dora-explorer.html : Dora Explorer lessons
-- spongebob.html : SpongeBob lessons
-- README.md : This file
+Этот проект содержит набор интерактивных опросников для детей с персонажами популярных мультфильмов.
 
-Features:
-- Floating animated background with English letters
-- Interactive video lessons from YouTube
-- Vocabulary sections with English-Kazakh translations
-- Multiple choice quizzes with checkboxes
-- Responsive design for all devices
-- Beautiful gradient backgrounds
+## Файлы
 
-How to use:
-1. Download all files to your computer
-2. Open index.html in any browser
-3. Click on any cartoon to start learning
-4. Watch videos and complete quizzes
-5. For GitHub Pages: Push to repo and enable Pages
+- `index.html` - Главная страница с выбором персонажей
+- `styles.css` - Общие стили для всех опросников
+- `spongebob.html` - Опросник с Губкой Бобом
+- `peppa-pig.html` - Опросник со Свинкой Пеппой
+- `paw-patrol.html` - Опросник со Щенячьим патрулем
+- `dora-explorer.html` - Опросник с Дарой-путешественницей
+- `README.md` - Эта документация
+
+## Особенности
+
+- **Интерактивность**: Дети выбирают ответы кликом
+- **Визуальная обратная связь**: Анимации для правильных/неправильных ответов
+- **Сохранение прогресса**: Выбранные ответы сохраняются в localStorage
+- **Сброс прогресса**: Кнопка "Начать заново" очищает все выборы
+- **Адаптивный дизайн**: Работает на всех устройствах
+- **Тематическое оформление**: У каждого персонажа свой уникальный стиль
+
+## Как использовать
+
+1. Откройте `index.html` в браузере
+2. Выберите любимого персонажа
+3. Отвечайте на вопросы, выбирая варианты ответов
+4. Нажмите "Проверить ответы" чтобы увидеть результат
+5. Используйте "Начать заново" для сброса прогресса
+
+## Технологии
+
+- HTML5
+- CSS3 (Grid, Flexbox, Animations)
+- JavaScript (ES6+)
+- Local Storage для сохранения прогресса
+
+## Персонажи
+
+### Губка Боб
+- Тема: Морские приключения
+- Цвета: Желтый и синий
+- Вопросы о Бикини Боттом и друзьях
+
+### Свинка Пеппа
+- Тема: Семья и друзья
+- Цвета: Розовый и голубой
+- Вопросы о семье и веселых приключениях
+
+### Щенячий патруль
+- Тема: Спасение и команда
+- Цвета: Синий и красный
+- Вопросы о щенках и их миссиях
+
+### Даша-путешественница
+- Тема: Путешествия и обучение
+- Цвета: Красный и бирюзовый
+- Вопросы о приключениях и друзьях
+
+## Разработка
+
+Проект готов к использованию и не требует дополнительной настройки. Все файлы связаны между собой и используют общие стили из `styles.css`.

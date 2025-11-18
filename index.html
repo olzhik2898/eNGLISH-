@@ -3,436 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Интерактивный опросник</title>
+    <title>Детские опросники - Главная</title>
     <style>
         :root {
-            --primary-color: #4a6fa5;
-            --secondary-color: #6b8cbc;
-            --correct-color: #4caf50;
-            --incorrect-color: #f44336;
-            --neutral-color: #e0e0e0;
-            --text-color: #333;
-            --light-text: #fff;
+            --spongebob-color: #ffde59;
+            --peppa-color: #ff9eb5;
+            --paw-patrol-color: #4a90e2;
+            --dora-color: #ff6b6b;
         }
         
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: #f5f5f5;
-            color: var(--text-color);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
             line-height: 1.6;
+            min-height: 100vh;
             padding: 20px;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            position: relative;
-            overflow: hidden;
+            text-align: center;
+        }
+        
+        header {
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
         }
         
         h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--primary-color);
-            position: relative;
+            font-size: 3rem;
+            color: white;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
         }
         
-        h1:after {
-            content: '';
-            display: block;
-            width: 100px;
-            height: 4px;
-            background: var(--primary-color);
-            margin: 10px auto;
-            border-radius: 2px;
+        .subtitle {
+            font-size: 1.5rem;
+            color: #ffeb3b;
+            margin-bottom: 20px;
         }
         
-        .section {
-            margin-bottom: 30px;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        .section-title {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-        }
-        
-        .section-title i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-        
-        .options-container {
+        .characters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
         }
         
-        .option {
-            padding: 12px 15px;
-            background-color: white;
-            border: 2px solid var(--neutral-color);
-            border-radius: 6px;
-            cursor: pointer;
+        .character-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
-            text-align: center;
+            cursor: pointer;
             position: relative;
             overflow: hidden;
         }
         
-        .option:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-            border-color: var(--secondary-color);
+        .character-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
         
-        .option.selected {
-            background-color: var(--secondary-color);
-            color: var(--light-text);
-            border-color: var(--primary-color);
+        .character-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
         }
         
-        .option.correct {
-            background-color: var(--correct-color);
-            color: var(--light-text);
-            border-color: var(--correct-color);
-            animation: pulse 1s;
+        .spongebob::before {
+            background: var(--spongebob-color);
         }
         
-        .option.incorrect {
-            background-color: var(--incorrect-color);
-            color: var(--light-text);
-            border-color: var(--incorrect-color);
-            animation: shake 0.5s;
+        .peppa::before {
+            background: var(--peppa-color);
         }
         
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
+        .paw-patrol::before {
+            background: var(--paw-patrol-color);
         }
         
-        button {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
+        .dora::before {
+            background: var(--dora-color);
+        }
+        
+        .character-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .character-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .character-description {
+            color: #666;
+            margin-bottom: 20px;
             font-size: 1rem;
-            font-weight: 600;
+        }
+        
+        .start-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         
-        #checkAnswers {
-            background-color: var(--primary-color);
-            color: white;
+        .start-button:hover {
+            background: #45a049;
+            transform: scale(1.05);
         }
         
-        #checkAnswers:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
         }
         
-        #resetQuiz {
-            background-color: #ff9800;
-            color: white;
-        }
-        
-        #resetQuiz:hover {
-            background-color: #f57c00;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .results {
-            margin-top: 30px;
+        .feature {
+            background: white;
             padding: 20px;
-            border-radius: 8px;
-            background-color: #e8f5e9;
-            text-align: center;
-            display: none;
-            animation: slideIn 0.5s ease-out;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        .results.show {
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
             display: block;
         }
         
-        .score {
-            font-size: 1.5rem;
+        .feature-title {
+            font-size: 1.3rem;
             font-weight: bold;
-            margin-bottom: 15px;
-            color: var(--correct-color);
+            margin-bottom: 10px;
+            color: #333;
         }
         
-        .feedback {
-            margin-top: 15px;
-            font-style: italic;
+        .feature-description {
+            color: #666;
+            font-size: 0.9rem;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        footer {
+            margin-top: 50px;
+            color: white;
+            padding: 20px;
         }
         
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
         }
         
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
+        .bounce {
+            animation: bounce 2s infinite;
         }
         
-        .character-icon {
-            font-size: 1.5rem;
-            margin-right: 10px;
-        }
-        
-        /* Адаптивность */
-        @media (max-width: 600px) {
-            .options-container {
-                grid-template-columns: 1fr;
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
             }
             
-            .buttons {
-                flex-direction: column;
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .characters-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Интерактивный опросник</h1>
+        <header>
+            <h1>🎮 Веселые опросники для детей! 🎮</h1>
+            <div class="subtitle">Выбери любимого персонажа и начинай играть!</div>
+        </header>
         
-        <div class="section" id="directions">
-            <div class="section-title">
-                <span class="character-icon">📍</span> Directions
+        <div class="characters-grid">
+            <div class="character-card spongebob" onclick="location.href='spongebob.html'">
+                <span class="character-icon">🧽</span>
+                <div class="character-name">Губка Боб</div>
+                <div class="character-description">
+                    Присоединяйся к Губке Бобу и его друзьям в Бикини Боттом! 
+                    Отвечай на вопросы о морских приключениях и веселых историях!
+                </div>
+                <button class="start-button">Начать игру</button>
             </div>
-            <div class="options-container">
-                <div class="option" data-correct="false">Left</div>
-                <div class="option" data-correct="true">Right</div>
-                <div class="option" data-correct="false">Up</div>
-                <div class="option" data-correct="false">Down</div>
+            
+            <div class="character-card peppa" onclick="location.href='peppa-pig.html'">
+                <span class="character-icon">🐷</span>
+                <div class="character-name">Свинка Пеппа</div>
+                <div class="character-description">
+                    Прыгай по лужам вместе с Пеппой! 
+                    Узнай больше о семье, друзьях и веселых приключениях!
+                </div>
+                <button class="start-button">Начать игру</button>
+            </div>
+            
+            <div class="character-card paw-patrol" onclick="location.href='paw-patrol.html'">
+                <span class="character-icon">🐾</span>
+                <div class="character-name">Щенячий патруль</div>
+                <div class="character-description">
+                    Щенячий патруль к действию! 
+                    Помоги щенкам спасать мир и отвечай на интересные вопросы!
+                </div>
+                <button class="start-button">Начать игру</button>
+            </div>
+            
+            <div class="character-card dora" onclick="location.href='dora-explorer.html'">
+                <span class="character-icon">🧭</span>
+                <div class="character-name">Даша-путешественница</div>
+                <div class="character-description">
+                    Отправляйся в путешествие с Дарой! 
+                    Отвечай на вопросы о приключениях, друзьях и загадках!
+                </div>
+                <button class="start-button">Начать игру</button>
             </div>
         </div>
         
-        <div class="section" id="vocabulary">
-            <div class="section-title">
-                <span class="character-icon">📚</span> Vocabulary
+        <div class="features">
+            <div class="feature">
+                <span class="feature-icon">🎯</span>
+                <div class="feature-title">Интерактивное обучение</div>
+                <div class="feature-description">
+                    Дети учатся через игру - выбирают ответы и сразу видят результат!
+                </div>
             </div>
-            <div class="options-container">
-                <div class="option" data-correct="true">Book</div>
-                <div class="option" data-correct="false">Car</div>
-                <div class="option" data-correct="true">Pen</div>
-                <div class="option" data-correct="false">Tree</div>
+            
+            <div class="feature">
+                <span class="feature-icon">🌈</span>
+                <div class="feature-title">Яркий дизайн</div>
+                <div class="feature-description">
+                    Красочные персонажи и анимации делают процесс увлекательным!
+                </div>
             </div>
-        </div>
-        
-        <div class="section" id="questions">
-            <div class="section-title">
-                <span class="character-icon">❓</span> Questions
+            
+            <div class="feature">
+                <span class="feature-icon">🔄</span>
+                <div class="feature-title">Можно играть снова</div>
+                <div class="feature-description">
+                    После каждого прохождения можно начать заново и улучшить результат!
+                </div>
             </div>
-            <div class="options-container">
-                <div class="option" data-correct="true">What is your name?</div>
-                <div class="option" data-correct="false">How old are you?</div>
-                <div class="option" data-correct="true">Where are you from?</div>
-                <div class="option" data-correct="false">What time is it?</div>
-            </div>
-        </div>
-        
-        <div class="section" id="grammar">
-            <div class="section-title">
-                <span class="character-icon">📝</span> Grammar
-            </div>
-            <div class="options-container">
-                <div class="option" data-correct="false">I is happy</div>
-                <div class="option" data-correct="true">I am happy</div>
-                <div class="option" data-correct="false">I are happy</div>
-                <div class="option" data-correct="false">I be happy</div>
+            
+            <div class="feature">
+                <span class="feature-icon">📱</span>
+                <div class="feature-title">На любом устройстве</div>
+                <div class="feature-description">
+                    Играй на компьютере, планшете или телефоне - все адаптируется!
+                </div>
             </div>
         </div>
         
-        <div class="section" id="sentence-building">
-            <div class="section-title">
-                <span class="character-icon">🏗️</span> Sentence Building
-            </div>
-            <div class="options-container">
-                <div class="option" data-correct="true">The cat is sleeping</div>
-                <div class="option" data-correct="false">Sleeping cat the is</div>
-                <div class="option" data-correct="false">Cat sleeping the is</div>
-                <div class="option" data-correct="true">My dog likes to play</div>
-            </div>
-        </div>
-        
-        <div class="section" id="discussion">
-            <div class="section-title">
-                <span class="character-icon">💬</span> Discussion
-            </div>
-            <div class="options-container">
-                <div class="option" data-correct="true">What do you think?</div>
-                <div class="option" data-correct="false">I don't know</div>
-                <div class="option" data-correct="true">Let's talk about it</div>
-                <div class="option" data-correct="false">Maybe later</div>
-            </div>
-        </div>
-        
-        <div class="section" id="script">
-            <div class="section-title">
-                <span class="character-icon">📜</span> Script
-            </div>
-            <div class="options-container">
-                <div class="option" data-correct="true">Hello, how are you?</div>
-                <div class="option" data-correct="false">Goodbye, see you later</div>
-                <div class="option" data-correct="true">Nice to meet you</div>
-                <div class="option" data-correct="false">What's your favorite color?</div>
-            </div>
-        </div>
-        
-        <div class="buttons">
-            <button id="checkAnswers">Проверить ответы</button>
-            <button id="resetQuiz">Начать заново</button>
-        </div>
-        
-        <div class="results" id="results">
-            <div class="score" id="score">Ваш результат: 0/0</div>
-            <div id="feedback" class="feedback"></div>
-        </div>
+        <footer>
+            <p>© 2024 Веселые детские опросники | Разработано с ❤️ для детей</p>
+        </footer>
     </div>
 
     <script>
+        // Добавляем анимацию при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
-            const options = document.querySelectorAll('.option');
-            const checkButton = document.getElementById('checkAnswers');
-            const resetButton = document.getElementById('resetQuiz');
-            const results = document.getElementById('results');
-            const scoreElement = document.getElementById('score');
-            const feedbackElement = document.getElementById('feedback');
-            
-            // Проверяем, есть ли сохраненные ответы в localStorage
-            const savedSelections = JSON.parse(localStorage.getItem('quizSelections')) || {};
-            
-            // Восстанавливаем выбранные варианты
-            options.forEach(option => {
-                const sectionId = option.closest('.section').id;
-                const optionText = option.textContent;
-                
-                if (savedSelections[sectionId] && savedSelections[sectionId].includes(optionText)) {
-                    option.classList.add('selected');
-                }
-                
-                // Обработчик клика по варианту
-                option.addEventListener('click', function() {
-                    this.classList.toggle('selected');
-                    
-                    // Сохраняем выбор в localStorage
-                    saveSelections();
-                });
+            const cards = document.querySelectorAll('.character-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+                card.style.animation = 'fadeInDown 0.8s ease-out forwards';
             });
             
-            // Функция сохранения выбранных вариантов
-            function saveSelections() {
-                const selections = {};
-                
-                document.querySelectorAll('.section').forEach(section => {
-                    const sectionId = section.id;
-                    const selectedOptions = Array.from(section.querySelectorAll('.option.selected'))
-                        .map(option => option.textContent);
-                    
-                    selections[sectionId] = selectedOptions;
+            // Добавляем эффект "bounce" к иконкам при наведении
+            const icons = document.querySelectorAll('.character-icon');
+            icons.forEach(icon => {
+                icon.addEventListener('mouseenter', function() {
+                    this.classList.add('bounce');
                 });
                 
-                localStorage.setItem('quizSelections', JSON.stringify(selections));
-            }
-            
-            // Проверка ответов
-            checkButton.addEventListener('click', function() {
-                let correctCount = 0;
-                let totalCorrect = 0;
-                
-                // Считаем общее количество правильных ответов
-                options.forEach(option => {
-                    if (option.dataset.correct === 'true') {
-                        totalCorrect++;
-                    }
+                icon.addEventListener('mouseleave', function() {
+                    this.classList.remove('bounce');
                 });
-                
-                // Проверяем каждый выбранный вариант
-                options.forEach(option => {
-                    if (option.classList.contains('selected')) {
-                        if (option.dataset.correct === 'true') {
-                            option.classList.add('correct');
-                            correctCount++;
-                        } else {
-                            option.classList.add('incorrect');
-                        }
-                    } else if (option.dataset.correct === 'true') {
-                        // Подсвечиваем правильные ответы, которые не были выбраны
-                        option.classList.add('correct');
-                    }
-                });
-                
-                // Показываем результаты
-                const percentage = Math.round((correctCount / totalCorrect) * 100);
-                scoreElement.textContent = `Ваш результат: ${correctCount}/${totalCorrect} (${percentage}%)`;
-                
-                // Генерируем обратную связь
-                let feedback = '';
-                if (percentage === 100) {
-                    feedback = 'Отлично! Все ответы правильные!';
-                } else if (percentage >= 80) {
-                    feedback = 'Хорошая работа! Почти все ответы верны.';
-                } else if (percentage >= 60) {
-                    feedback = 'Неплохо, но есть над чем поработать.';
-                } else {
-                    feedback = 'Попробуйте еще раз, чтобы улучшить результат.';
-                }
-                
-                feedbackElement.textContent = feedback;
-                results.classList.add('show');
-                
-                // Прокручиваем к результатам
-                results.scrollIntoView({ behavior: 'smooth' });
-            });
-            
-            // Сброс опросника
-            resetButton.addEventListener('click', function() {
-                options.forEach(option => {
-                    option.classList.remove('selected', 'correct', 'incorrect');
-                });
-                
-                results.classList.remove('show');
-                
-                // Очищаем localStorage
-                localStorage.removeItem('quizSelections');
             });
         });
     </script>

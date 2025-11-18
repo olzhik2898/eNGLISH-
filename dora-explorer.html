@@ -3,8 +3,364 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dora Explorer Lessons - JuniorLingo</title>
+  <title>Dora Explorer - Jungle Adventure - JuniorLingo</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Accordion Styles */
+    .accordion-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 3rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .accordion-section {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .accordion-section:last-child {
+      border-bottom: none;
+    }
+
+    .accordion-header {
+      padding: 1.5rem 2rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      background: var(--surface);
+      display: flex;
+      justify-content: between;
+      align-items: center;
+    }
+
+    .accordion-header:hover {
+      background: var(--background);
+    }
+
+    .accordion-header h3 {
+      color: var(--primary);
+      margin: 0;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 0 2rem;
+      background: var(--background);
+    }
+
+    .accordion-content.show {
+      display: block;
+      padding: 2.5rem;
+    }
+
+    /* Vocabulary List Styles */
+    .vocabulary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .vocabulary-item {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 1rem;
+      border: 2px solid var(--border);
+      transition: all 0.3s;
+    }
+
+    .vocabulary-item:hover {
+      border-color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .vocabulary-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .vocabulary-checkbox input {
+      display: none;
+    }
+
+    .checkmark {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.25rem;
+      transition: all 0.3s;
+    }
+
+    .vocabulary-checkbox.checked .checkmark {
+      background: var(--secondary);
+      border-color: var(--secondary);
+    }
+
+    .vocabulary-checkbox.checked .checkmark::after {
+      content: '✓';
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .vocabulary-checkbox.checked .vocabulary-word {
+      color: var(--secondary);
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    .vocabulary-content {
+      flex: 1;
+    }
+
+    .vocabulary-word {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--primary);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .vocabulary-transcription {
+      font-family: 'Courier New', monospace;
+      color: var(--accent);
+      font-size: 1rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .vocabulary-translation {
+      color: var(--text-light);
+      font-style: italic;
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .vocabulary-definition {
+      color: var(--text);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Questions Styles */
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .question-item {
+      background: var(--surface);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border-left: 4px solid var(--accent);
+    }
+
+    .question-text {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text);
+      font-size: 1.1rem;
+    }
+
+    .answer-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .answer-option {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--background);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .answer-option:hover {
+      border-color: var(--primary);
+      background: #f0f4ff;
+    }
+
+    /* Grammar Styles */
+    .grammar-exercises {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .grammar-item {
+      background: var(--surface);
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+
+    .grammar-title {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .grammar-explanation {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .sentence-completion {
+      background: var(--background);
+      padding: 1.5rem;
+      border-radius: 8px;
+    }
+
+    .sentence {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .grammar-input {
+      padding: 0.5rem;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      font-size: 1rem;
+      width: 120px;
+    }
+
+    .grammar-input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    /* Lesson Header */
+    .lesson-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 3rem 2rem;
+      border-radius: 24px;
+      margin-bottom: 3rem;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .lesson-header h1 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 2.5rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      transition: all 0.3s;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .back-link:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Video Section */
+    .video-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 2.5rem;
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .section-title {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      margin-bottom: 1.5rem;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Progress and Navigation */
+    .lesson-progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 3rem;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .progress-btn {
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .progress-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+    }
+
+    .progress-info {
+      text-align: center;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
   <div class="floating-letters" id="floatingLetters"></div>
@@ -15,7 +371,7 @@
     <nav>
       <a href="index.html#cartoons">Cartoons</a>
       <a href="index.html#fairy">Fairy Tales</a>
-      <a href="index.html#about">About</a>
+      <a href="index.html#about">About Us</a>
     </nav>
   </header>
 
@@ -23,136 +379,293 @@
     <a href="index.html" class="back-link">← Back to Cartoons</a>
     
     <div class="lesson-header">
-      <h1>Dora the Explorer English Lessons</h1>
-      <p>Explore the world with Dora and learn English along the way!</p>
+      <h1>Dora Explorer - Jungle Adventure (full episode)</h1>
+      <p>Learn English with Dora's exciting exploration!</p>
     </div>
 
+    <!-- Video Section -->
     <section class="video-section">
-      <h2 class="section-title">🎬 Watch the Video Lesson</h2>
+      <h2 class="section-title">🎬 Full Episode</h2>
       <div class="video-container">
         <iframe src="https://www.youtube.com/embed/GRzXFYxzYWg" 
                 frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen>
         </iframe>
       </div>
-      <p><strong>Lesson Topic:</strong> Adventure Journey - Learn about exploration and discovery</p>
     </section>
 
-    <section class="vocabulary-section">
-      <h2 class="section-title">📚 New Vocabulary Words</h2>
-      <div class="words-grid">
-        <div class="word-card">
-          <div class="word-english">Explore</div>
-          <div class="word-translation">Зерттеу</div>
+    <!-- Accordion Sections -->
+    <div class="accordion-container">
+      <!-- Directions Section -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <h3>Directions ▼</h3>
         </div>
-        <div class="word-card">
-          <div class="word-english">Map</div>
-          <div class="word-translation">Карта</div>
-        </div>
-        <div class="word-card">
-          <div class="word-english">Journey</div>
-          <div class="word-translation">Саяхат</div>
-        </div>
-        <div class="word-card">
-          <div class="word-english">Discover</div>
-          <div class="word-translation">Ашу</div>
-        </div>
-        <div class="word-card">
-          <div class="word-english">Backpack</div>
-          <div class="word-translation">Сөмке</div>
-        </div>
-        <div class="word-card">
-          <div class="word-english">Adventure</div>
-          <div class="word-translation">Шытырман оқиға</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="quiz-section">
-      <h2 class="section-title">🎯 Test Your Knowledge</h2>
-      <p>Select all correct answers for each question:</p>
-      
-      <div class="quiz-question">
-        <div class="question-text">1. Which words are related to exploration? (Select all that apply)</div>
-        <div class="checkbox-options">
-          <label class="checkbox-option">
-            <input type="checkbox" name="q1" value="explore">
-            <span>Explore</span>
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="q1" value="map">
-            <span>Map</span>
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="q1" value="sleep">
-            <span>Sleep</span>
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="q1" value="discover">
-            <span>Discover</span>
-          </label>
+        <div class="accordion-content">
+          <p>Join Dora on her jungle adventure and learn words about exploration and discovery!</p>
+          <p><strong>Learning Objectives:</strong></p>
+          <ul>
+            <li>Learn 6 new vocabulary words about adventure</li>
+            <li>Practice using prepositions of place</li>
+            <li>Discuss exploration and discovery</li>
+            <li>Improve listening and following directions</li>
+          </ul>
         </div>
       </div>
 
-      <div class="quiz-question">
-        <div class="question-text">2. What does Dora need for her adventures? (Select all that apply)</div>
-        <div class="checkbox-options">
-          <label class="checkbox-option">
-            <input type="checkbox" name="q2" value="backpack">
-            <span>Backpack</span>
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="q2" value="map">
-            <span>Map</span>
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="q2" value="computer">
-            <span>Computer</span>
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="q2" value="friends">
-            <span>Friends</span>
-          </label>
+      <!-- Vocabulary Section -->
+      <div class="accordion-section">
+        <div class="accordion-header active">
+          <h3>Vocabulary ▲</h3>
+        </div>
+        <div class="accordion-content show">
+          <div class="vocabulary-list">
+            <div class="vocabulary-item">
+              <label class="vocabulary-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <div class="vocabulary-content">
+                  <span class="vocabulary-word">Explore</span>
+                  <span class="vocabulary-transcription">/ɪkˈsplɔːr/</span>
+                  <span class="vocabulary-translation">Зерттеу</span>
+                  <p class="vocabulary-definition">To travel through an area to learn about it.</p>
+                </div>
+              </label>
+            </div>
+
+            <div class="vocabulary-item">
+              <label class="vocabulary-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <div class="vocabulary-content">
+                  <span class="vocabulary-word">Map</span>
+                  <span class="vocabulary-transcription">/mæp/</span>
+                  <span class="vocabulary-translation">Карта</span>
+                  <p class="vocabulary-definition">A drawing of an area showing physical features.</p>
+                </div>
+              </label>
+            </div>
+
+            <div class="vocabulary-item">
+              <label class="vocabulary-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <div class="vocabulary-content">
+                  <span class="vocabulary-word">Backpack</span>
+                  <span class="vocabulary-transcription">/ˈbæk.pæk/</span>
+                  <span class="vocabulary-translation">Сөмке</span>
+                  <p class="vocabulary-definition">A bag carried on the back for belongings.</p>
+                </div>
+              </label>
+            </div>
+
+            <div class="vocabulary-item">
+              <label class="vocabulary-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <div class="vocabulary-content">
+                  <span class="vocabulary-word">Bridge</span>
+                  <span class="vocabulary-transcription">/brɪdʒ/</span>
+                  <span class="vocabulary-translation">Көпір</span>
+                  <p class="vocabulary-definition">A structure built over a river or road.</p>
+                </div>
+              </label>
+            </div>
+
+            <div class="vocabulary-item">
+              <label class="vocabulary-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <div class="vocabulary-content">
+                  <span class="vocabulary-word">Mountain</span>
+                  <span class="vocabulary-transcription">/ˈmaʊn.tən/</span>
+                  <span class="vocabulary-translation">Тау</span>
+                  <p class="vocabulary-definition">A very high hill with steep sides.</p>
+                </div>
+              </label>
+            </div>
+
+            <div class="vocabulary-item">
+              <label class="vocabulary-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <div class="vocabulary-content">
+                  <span class="vocabulary-word">River</span>
+                  <span class="vocabulary-transcription">/ˈrɪv.ər/</span>
+                  <span class="vocabulary-translation">Өзен</span>
+                  <p class="vocabulary-definition">A large natural stream of water.</p>
+                </div>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="quiz-question">
-        <div class="question-text">3. Which words describe Dora's personality? (Select all that apply)</div>
-        <div class="checkbox-options">
-          <label class="checkbox-option">
-            <input type="checkbox" name="q3" value="brave">
-            <span>Brave</span>
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="q3" value="curious">
-            <span>Curious</span>
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="q3" value="scared">
-            <span>Scared</span>
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="q3" value="smart">
-            <span>Smart</span>
-          </label>
+      <!-- Questions Section -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <h3>Questions ▼</h3>
+        </div>
+        <div class="accordion-content">
+          <div class="questions-list">
+            <div class="question-item">
+              <p class="question-text">1. Where does Dora want to go in this adventure?</p>
+              <div class="answer-options">
+                <label class="answer-option">
+                  <input type="radio" name="q1" value="a">
+                  <span>To the Blue Mountain</span>
+                </label>
+                <label class="answer-option">
+                  <input type="radio" name="q1" value="b">
+                  <span>To the Big River</span>
+                </label>
+                <label class="answer-option">
+                  <input type="radio" name="q1" value="c">
+                  <span>To the Tall Tower</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-item">
+              <p class="question-text">2. Who helps Dora on her adventure?</p>
+              <div class="answer-options">
+                <label class="answer-option">
+                  <input type="checkbox" name="q2" value="a">
+                  <span>Boots the monkey</span>
+                </label>
+                <label class="answer-option">
+                  <input type="checkbox" name="q2" value="b">
+                  <span>Backpack</span>
+                </label>
+                <label class="answer-option">
+                  <input type="checkbox" name="q2" value="c">
+                  <span>Map</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-item">
+              <p class="question-text">3. What do they need to cross?</p>
+              <div class="answer-options">
+                <label class="answer-option">
+                  <input type="radio" name="q3" value="a">
+                  <span>A broken bridge</span>
+                </label>
+                <label class="answer-option">
+                  <input type="radio" name="q3" value="b">
+                  <span>A tall wall</span>
+                </label>
+                <label class="answer-option">
+                  <input type="radio" name="q3" value="c">
+                  <span>A deep river</span>
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <button class="quiz-submit">Check My Answers</button>
-      <div class="quiz-result"></div>
-    </section>
+      <!-- Grammar Section -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <h3>Grammar ▼</h3>
+        </div>
+        <div class="accordion-content">
+          <div class="grammar-exercises">
+            <div class="grammar-item">
+              <p class="grammar-title">Prepositions of Place</p>
+              <p class="grammar-explanation">We use prepositions to describe where things are located.</p>
+              
+              <div class="sentence-completion">
+                <p>Complete the sentences with: over, through, across</p>
+                <div class="sentence">
+                  We need to go <input type="text" class="grammar-input" placeholder="(preposition)"> the bridge.
+                </div>
+                <div class="sentence">
+                  Let's walk <input type="text" class="grammar-input" placeholder="(preposition)"> the forest.
+                </div>
+                <div class="sentence">
+                  Jump <input type="text" class="grammar-input" placeholder="(preposition)"> the river!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Discussion Section -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <h3>Discussion ▼</h3>
+        </div>
+        <div class="accordion-content">
+          <div class="discussion-questions">
+            <p class="discussion-title">Talk about these questions:</p>
+            <ul class="discussion-list">
+              <li>Do you like exploring new places? Why or why not?</li>
+              <li>What would you put in your adventure backpack?</li>
+              <li>Have you ever used a map? Where did you go?</li>
+              <li>What's the most exciting place you've visited?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Script Section -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <h3>Script ▼</h3>
+        </div>
+        <div class="accordion-content">
+          <div class="script-content">
+            <p class="script-line"><strong>Dora:</strong> ¡Hola! I'm Dora! Can you help me get to the Blue Mountain?</p>
+            <p class="script-line"><strong>Boots:</strong> Yeah! Let's go on an adventure!</p>
+            <p class="script-line"><strong>Backpack:</strong> I've got everything we need!</p>
+            <p class="script-line"><strong>Map:</strong> First, go through the forest. Then, cross the bridge!</p>
+            <p class="script-line"><strong>Dora:</strong> We did it! We reached the Blue Mountain!</p>
+            <p class="script-line"><strong>All:</strong> We're explorers! ¡Lo hicimos!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress and Navigation -->
+    <div class="lesson-progress">
+      <a href="#" class="progress-btn" style="visibility: hidden;">Previous Lesson</a>
+      <div class="progress-info">Dora Explorer - Jungle Adventure</div>
+      <a href="dora-explorer-2.html" class="progress-btn">Next Lesson →</a>
+    </div>
   </main>
 
   <footer>
-    © 2025 JuniorLingo - Learn English Fun Way<br/>
-    Contact: <a href="mailto:shynar.nasibolla.02@mail.ru">shynar.nasibolla.02@mail.ru</a>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>JuniorLingo</h3>
+        <p>Making English learning fun and engaging for children through cartoons and interactive lessons.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <a href="index.html#cartoons">Cartoons</a>
+        <a href="index.html#fairy">Fairy Tales</a>
+        <a href="index.html#about">About</a>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Email: <a href="mailto:shynar.nasibolla.02@mail.ru">shynar.nasibolla.02@mail.ru</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 JuniorLingo - Learn English Fun Way. All rights reserved.
+    </div>
   </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Enhanced floating letters
       const container = document.getElementById('floatingLetters');
       const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      const letterCount = 35;
+      const letterCount = 50;
       
       for (let i = 0; i < letterCount; i++) {
         const letter = document.createElement('div');
@@ -160,86 +673,59 @@
         letter.textContent = letters[Math.floor(Math.random() * letters.length)];
         letter.style.left = Math.random() * 100 + 'vw';
         letter.style.top = Math.random() * 100 + 'vh';
-        letter.style.animationDelay = Math.random() * 8 + 's';
-        letter.style.fontSize = (Math.random() * 25 + 12) + 'px';
-        letter.style.opacity = Math.random() * 0.3 + 0.1;
+        letter.style.animationDelay = Math.random() * 15 + 's';
+        letter.style.fontSize = (Math.random() * 30 + 10) + 'px';
+        letter.style.opacity = Math.random() * 0.4 + 0.1;
+        letter.style.animationDuration = (Math.random() * 20 + 20) + 's';
         container.appendChild(letter);
       }
 
-      const submitBtn = document.querySelector('.quiz-submit');
-      const resultDiv = document.querySelector('.quiz-result');
-
-      const correctAnswers = {
-        q1: ['explore', 'map', 'discover'],
-        q2: ['backpack', 'map', 'friends'],
-        q3: ['brave', 'curious', 'smart']
-      };
-
-      submitBtn.addEventListener('click', function() {
-        let score = 0;
-        let totalQuestions = Object.keys(correctAnswers).length;
-        let allCorrect = true;
-
-        for (const [question, correctValues] of Object.entries(correctAnswers)) {
-          const selectedCheckboxes = document.querySelectorAll(`input[name="${question}"]:checked`);
-          const selectedValues = Array.from(selectedCheckboxes).map(cb => cb.value);
+      // Accordion functionality
+      const accordionHeaders = document.querySelectorAll('.accordion-header');
+      
+      accordionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+          const content = this.nextElementSibling;
+          const isActive = content.classList.contains('show');
           
-          const isCorrect = 
-            selectedValues.length === correctValues.length &&
-            selectedValues.every(val => correctValues.includes(val)) &&
-            correctValues.every(val => selectedValues.includes(val));
-
-          if (isCorrect) {
-            score++;
-            selectedCheckboxes.forEach(cb => {
-              cb.parentElement.style.background = '#d1fae5';
-              cb.parentElement.style.borderColor = '#10b981';
-            });
-          } else {
-            allCorrect = false;
-            selectedCheckboxes.forEach(cb => {
-              if (!correctValues.includes(cb.value)) {
-                cb.parentElement.style.background = '#fef2f2';
-                cb.parentElement.style.borderColor = '#ef4444';
-              } else {
-                cb.parentElement.style.background = '#d1fae5';
-                cb.parentElement.style.borderColor = '#10b981';
-              }
-            });
-            correctValues.forEach(correctVal => {
-              if (!selectedValues.includes(correctVal)) {
-                const correctCheckbox = document.querySelector(`input[name="${question}"][value="${correctVal}"]`);
-                if (correctCheckbox) {
-                  correctCheckbox.parentElement.style.background = '#fef3c7';
-                  correctCheckbox.parentElement.style.borderColor = '#f59e0b';
-                }
-              }
-            });
+          // Close all accordions
+          document.querySelectorAll('.accordion-content').forEach(acc => {
+            acc.classList.remove('show');
+          });
+          document.querySelectorAll('.accordion-header h3').forEach(h3 => {
+            h3.textContent = h3.textContent.replace('▲', '▼');
+          });
+          
+          // Toggle current accordion
+          if (!isActive) {
+            content.classList.add('show');
+            this.querySelector('h3').textContent = this.querySelector('h3').textContent.replace('▼', '▲');
           }
-        }
-
-        resultDiv.style.display = 'block';
-        if (allCorrect) {
-          resultDiv.className = 'quiz-result success';
-          resultDiv.innerHTML = `🎉 Excellent! You got ${score}/${totalQuestions} perfect! All answers are correct!`;
-        } else {
-          resultDiv.className = 'quiz-result error';
-          resultDiv.innerHTML = `📚 You got ${score}/${totalQuestions} questions completely correct. Keep practicing!`;
-        }
-
-        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-          checkbox.disabled = true;
         });
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.6';
       });
 
-      document.querySelectorAll('.checkbox-option').forEach(option => {
-        option.addEventListener('mouseenter', function() {
-          this.style.transform = 'translateX(4px)';
-        });
-        option.addEventListener('mouseleave', function() {
-          this.style.transform = 'translateX(0)';
+      // Vocabulary checkboxes
+      const vocabCheckboxes = document.querySelectorAll('.vocabulary-checkbox input');
+      vocabCheckboxes.forEach(checkbox => {
+        // Load saved state
+        const word = checkbox.closest('.vocabulary-item').querySelector('.vocabulary-word').textContent;
+        const savedState = localStorage.getItem(`dora_${word}`);
+        if (savedState === 'checked') {
+          checkbox.checked = true;
+          checkbox.closest('.vocabulary-checkbox').classList.add('checked');
+        }
+        
+        checkbox.addEventListener('change', function() {
+          const label = this.closest('.vocabulary-checkbox');
+          const word = label.querySelector('.vocabulary-word').textContent;
+          
+          if (this.checked) {
+            label.classList.add('checked');
+            localStorage.setItem(`dora_${word}`, 'checked');
+          } else {
+            label.classList.remove('checked');
+            localStorage.setItem(`dora_${word}`, 'unchecked');
+          }
         });
       });
     });

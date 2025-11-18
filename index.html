@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Floating letters background -->
+  <div class="floating-letters" id="floatingLetters"></div>
+  
   <header>
     <div class="brand">JuniorLingo</div>
     <nav>
@@ -63,5 +66,25 @@
       Contact us: <a href="mailto:shynar.nasibolla.02@mail.ru">shynar.nasibolla.02@mail.ru</a>
     </footer>
   </main>
+
+  <script>
+    // Create floating letters
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.getElementById('floatingLetters');
+      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const letterCount = 30;
+      
+      for (let i = 0; i < letterCount; i++) {
+        const letter = document.createElement('div');
+        letter.className = 'letter';
+        letter.textContent = letters[Math.floor(Math.random() * letters.length)];
+        letter.style.left = Math.random() * 100 + 'vw';
+        letter.style.top = Math.random() * 100 + 'vh';
+        letter.style.animationDelay = Math.random() * 5 + 's';
+        letter.style.fontSize = (Math.random() * 20 + 16) + 'px';
+        container.appendChild(letter);
+      }
+    });
+  </script>
 </body>
 </html>

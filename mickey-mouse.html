@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mickey Mouse Lessons - JuniorLingo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="floating-letters" id="floatingLetters"></div>
+  <div class="floating-title">Mickey Mouse</div>
+  
+  <header>
+    <div class="brand">JuniorLingo</div>
+    <nav>
+      <a href="index.html#cartoons">Cartoons</a>
+      <a href="index.html#fairy">Fairy Tales</a>
+      <a href="index.html#about">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <a href="index.html" class="back-link">← Back to Cartoons</a>
+    
+    <div class="lesson-header">
+      <h1>Mickey Mouse English Lessons</h1>
+      <p>Join Mickey and friends in magical adventures while learning English!</p>
+    </div>
+
+    <section class="video-section">
+      <h2 class="section-title">🎬 Watch the Video Lesson</h2>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/HSzx3y8wMl4" 
+                frameborder="0" 
+                allowfullscreen>
+        </iframe>
+      </div>
+      <p><strong>Lesson Topic:</strong> Magic Show - Learn words about magic and surprises</p>
+    </section>
+
+    <section class="vocabulary-section">
+      <h2 class="section-title">📚 New Vocabulary Words</h2>
+      <div class="words-grid">
+        <div class="word-card">
+          <div class="word-english">Magic</div>
+          <div class="word-translation">Сиқыр</div>
+        </div>
+        <div class="word-card">
+          <div class="word-english">Show</div>
+          <div class="word-translation">Көрсету</div>
+        </div>
+        <div class="word-card">
+          <div class="word-english">Friend</div>
+          <div class="word-translation">Дос</div>
+        </div>
+        <div class="word-card">
+          <div class="word-english">Surprise</div>
+          <div class="word-translation">Таңғалу</div>
+        </div>
+        <div class="word-card">
+          <div class="word-english">Happy</div>
+          <div class="word-translation">Бақытты</div>
+        </div>
+        <div class="word-card">
+          <div class="word-english">Fun</div>
+          <div class="word-translation">Көңілді</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quiz-section">
+      <h2 class="section-title">🎯 Test Your Knowledge</h2>
+      <p>Select all correct answers for each question:</p>
+      
+      <div class="quiz-question">
+        <div class="question-text">1. Which words are related to magic? (Select all that apply)</div>
+        <div class="checkbox-options">
+          <label class="checkbox-option">
+            <input type="checkbox" name="q1" value="magic">
+            <span>Magic</span>
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="q1" value="surprise">
+            <span>Surprise</span>
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="q1" value="car">
+            <span>Car</span>
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="q1" value="show">
+            <span>Show</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="question-text">2. What makes Mickey Mouse stories fun? (Select all that apply)</div>
+        <div class="checkbox-options">
+          <label class="checkbox-option">
+            <input type="checkbox" name="q2" value="adventures">
+            <span>Adventures</span>
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="q2" value="friends">
+            <span>Friends</span>
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="q2" value="homework">
+            <span>Homework</span>
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="q2" value="magic">
+            <span>Magic</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="question-text">3. Which words describe feelings? (Select all that apply)</div>
+        <div class="checkbox-options">
+          <label class="checkbox-option">
+            <input type="checkbox" name="q3" value="happy">
+            <span>Happy</span>
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="q3" value="excited">
+            <span>Excited</span>
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="q3" value="table">
+            <span>Table</span>
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="q3" value="fun">
+            <span>Fun</span>
+          </label>
+        </div>
+      </div>
+
+      <button class="quiz-submit">Check My Answers</button>
+      <div class="quiz-result"></div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 JuniorLingo - Learn English Fun Way<br/>
+    Contact: <a href="mailto:shynar.nasibolla.02@mail.ru">shynar.nasibolla.02@mail.ru</a>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.getElementById('floatingLetters');
+      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const letterCount = 35;
+      
+      for (let i = 0; i < letterCount; i++) {
+        const letter = document.createElement('div');
+        letter.className = 'letter';
+        letter.textContent = letters[Math.floor(Math.random() * letters.length)];
+        letter.style.left = Math.random() * 100 + 'vw';
+        letter.style.top = Math.random() * 100 + 'vh';
+        letter.style.animationDelay = Math.random() * 8 + 's';
+        letter.style.fontSize = (Math.random() * 25 + 12) + 'px';
+        letter.style.opacity = Math.random() * 0.3 + 0.1;
+        container.appendChild(letter);
+      }
+
+      const submitBtn = document.querySelector('.quiz-submit');
+      const resultDiv = document.querySelector('.quiz-result');
+
+      const correctAnswers = {
+        q1: ['magic', 'surprise', 'show'],
+        q2: ['adventures', 'friends', 'magic'],
+        q3: ['happy', 'excited', 'fun']
+      };
+
+      submitBtn.addEventListener('click', function() {
+        let score = 0;
+        let totalQuestions = Object.keys(correctAnswers).length;
+        let allCorrect = true;
+
+        for (const [question, correctValues] of Object.entries(correctAnswers)) {
+          const selectedCheckboxes = document.querySelectorAll(`input[name="${question}"]:checked`);
+          const selectedValues = Array.from(selectedCheckboxes).map(cb => cb.value);
+          
+          const isCorrect = 
+            selectedValues.length === correctValues.length &&
+            selectedValues.every(val => correctValues.includes(val)) &&
+            correctValues.every(val => selectedValues.includes(val));
+
+          if (isCorrect) {
+            score++;
+            selectedCheckboxes.forEach(cb => {
+              cb.parentElement.style.background = '#d1fae5';
+              cb.parentElement.style.borderColor = '#10b981';
+            });
+          } else {
+            allCorrect = false;
+            selectedCheckboxes.forEach(cb => {
+              if (!correctValues.includes(cb.value)) {
+                cb.parentElement.style.background = '#fef2f2';
+                cb.parentElement.style.borderColor = '#ef4444';
+              } else {
+                cb.parentElement.style.background = '#d1fae5';
+                cb.parentElement.style.borderColor = '#10b981';
+              }
+            });
+            correctValues.forEach(correctVal => {
+              if (!selectedValues.includes(correctVal)) {
+                const correctCheckbox = document.querySelector(`input[name="${question}"][value="${correctVal}"]`);
+                if (correctCheckbox) {
+                  correctCheckbox.parentElement.style.background = '#fef3c7';
+                  correctCheckbox.parentElement.style.borderColor = '#f59e0b';
+                }
+              }
+            });
+          }
+        }
+
+        resultDiv.style.display = 'block';
+        if (allCorrect) {
+          resultDiv.className = 'quiz-result success';
+          resultDiv.innerHTML = `🎉 Excellent! You got ${score}/${totalQuestions} perfect! All answers are correct!`;
+        } else {
+          resultDiv.className = 'quiz-result error';
+          resultDiv.innerHTML = `📚 You got ${score}/${totalQuestions} questions completely correct. Keep practicing!`;
+        }
+
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+          checkbox.disabled = true;
+        });
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+      });
+
+      document.querySelectorAll('.checkbox-option').forEach(option => {
+        option.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateX(4px)';
+        });
+        option.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateX(0)';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

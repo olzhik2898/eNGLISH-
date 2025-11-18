@@ -31,7 +31,7 @@
       transition: background-color 0.3s;
       background: var(--surface);
       display: flex;
-      justify-content: between;
+      justify-content: space-between;
       align-items: center;
     }
 
@@ -43,14 +43,10 @@
       color: var(--primary);
       margin: 0;
       font-size: 1.4rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
     }
 
     .accordion-content {
       display: none;
-      padding: 0 2rem;
       background: var(--background);
     }
 
@@ -72,11 +68,6 @@
       padding: 1rem;
       border: 2px solid var(--border);
       transition: all 0.3s;
-    }
-
-    .vocabulary-item:hover {
-      border-color: var(--primary);
-      transform: translateX(5px);
     }
 
     .vocabulary-checkbox {
@@ -113,7 +104,6 @@
       content: '✓';
       color: white;
       font-weight: bold;
-      font-size: 14px;
     }
 
     .vocabulary-checkbox.checked .vocabulary-word {
@@ -130,7 +120,6 @@
       font-weight: 700;
       font-size: 1.3rem;
       color: var(--primary);
-      display: block;
       margin-bottom: 0.25rem;
     }
 
@@ -139,22 +128,18 @@
       color: var(--accent);
       font-size: 1rem;
       font-weight: 600;
-      display: block;
       margin-bottom: 0.25rem;
     }
 
     .vocabulary-translation {
       color: var(--text-light);
       font-style: italic;
-      display: block;
       margin-bottom: 0.5rem;
-      font-size: 1.1rem;
     }
 
     .vocabulary-definition {
       color: var(--text);
       line-height: 1.5;
-      margin: 0;
     }
 
     /* Questions Styles */
@@ -175,7 +160,6 @@
       font-weight: 600;
       margin-bottom: 1rem;
       color: var(--text);
-      font-size: 1.1rem;
     }
 
     .answer-options {
@@ -198,56 +182,20 @@
 
     .answer-option:hover {
       border-color: var(--primary);
-      background: #f0f4ff;
     }
 
-    /* Grammar Styles */
-    .grammar-exercises {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
+    .answer-option.correct {
+      background: #d1fae5;
+      border-color: var(--secondary);
     }
 
-    .grammar-item {
-      background: var(--surface);
-      padding: 1.5rem;
-      border-radius: 12px;
+    .answer-option.incorrect {
+      background: #fef2f2;
+      border-color: #ef4444;
     }
 
-    .grammar-title {
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 0.5rem;
-      font-size: 1.2rem;
-    }
-
-    .grammar-explanation {
-      color: var(--text-light);
-      margin-bottom: 1.5rem;
-    }
-
-    .sentence-completion {
-      background: var(--background);
-      padding: 1.5rem;
-      border-radius: 8px;
-    }
-
-    .sentence {
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
-    }
-
-    .grammar-input {
-      padding: 0.5rem;
-      border: 2px solid var(--border);
-      border-radius: 6px;
-      font-size: 1rem;
-      width: 120px;
-    }
-
-    .grammar-input:focus {
+    .answer-option.selected {
       border-color: var(--primary);
-      outline: none;
     }
 
     /* Lesson Header */
@@ -265,7 +213,6 @@
     .lesson-header h1 {
       color: var(--primary);
       margin-bottom: 1rem;
-      font-size: 2.5rem;
     }
 
     .back-link {
@@ -280,13 +227,10 @@
       background: rgba(255, 255, 255, 0.2);
       border-radius: 12px;
       transition: all 0.3s;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .back-link:hover {
       background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px);
     }
 
     /* Video Section */
@@ -303,7 +247,6 @@
     .section-title {
       color: var(--primary);
       margin-bottom: 1.5rem;
-      font-size: 1.8rem;
     }
 
     .video-container {
@@ -314,7 +257,6 @@
       margin-bottom: 1.5rem;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
     }
 
     .video-container iframe {
@@ -336,13 +278,11 @@
       background: rgba(255, 255, 255, 0.95);
       border-radius: 20px;
       box-shadow: var(--shadow-lg);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .progress-btn {
       padding: 1rem 2rem;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      background: var(--primary);
       color: white;
       text-decoration: none;
       border-radius: 12px;
@@ -351,14 +291,56 @@
     }
 
     .progress-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+      background: var(--primary-dark);
+    }
+
+    .progress-btn:disabled {
+      background: var(--text-light);
+      cursor: not-allowed;
     }
 
     .progress-info {
       text-align: center;
       color: var(--text-light);
       font-weight: 600;
+    }
+
+    .check-answers-btn {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: block;
+      margin: 2rem auto;
+    }
+
+    .check-answers-btn:hover {
+      background: #059669;
+    }
+
+    .quiz-result {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .quiz-result.success {
+      background: #d1fae5;
+      border: 2px solid var(--secondary);
+      color: #065f46;
+    }
+
+    .quiz-result.error {
+      background: #fef2f2;
+      border: 2px solid #ef4444;
+      color: #dc2626;
     }
   </style>
 </head>
@@ -369,8 +351,8 @@
   <header>
     <div class="brand">JuniorLingo</div>
     <nav>
+      <a href="index.html">Home</a>
       <a href="index.html#cartoons">Cartoons</a>
-      <a href="index.html#fairy">Fairy Tales</a>
       <a href="index.html#about">About Us</a>
     </nav>
   </header>
@@ -383,37 +365,17 @@
       <p>Learn English with Peppa Pig's picnic adventure!</p>
     </div>
 
-    <!-- Video Section -->
     <section class="video-section">
       <h2 class="section-title">🎬 Full Episode</h2>
       <div class="video-container">
         <iframe src="https://www.youtube.com/embed/pxnd1Etmhf4" 
-                frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen>
         </iframe>
       </div>
     </section>
 
-    <!-- Accordion Sections -->
     <div class="accordion-container">
-      <!-- Directions Section -->
-      <div class="accordion-section">
-        <div class="accordion-header">
-          <h3>Directions ▼</h3>
-        </div>
-        <div class="accordion-content">
-          <p>Watch the video and complete the exercises below. Pay attention to the vocabulary words and how they are used in the story.</p>
-          <p><strong>Learning Objectives:</strong></p>
-          <ul>
-            <li>Learn 6 new vocabulary words about picnics</li>
-            <li>Practice listening comprehension</li>
-            <li>Build sentences using new words</li>
-            <li>Discuss personal experiences</li>
-          </ul>
-        </div>
-      </div>
-
       <!-- Vocabulary Section -->
       <div class="accordion-section">
         <div class="accordion-header active">
@@ -472,32 +434,6 @@
                 </div>
               </label>
             </div>
-
-            <div class="vocabulary-item">
-              <label class="vocabulary-checkbox">
-                <input type="checkbox">
-                <span class="checkmark"></span>
-                <div class="vocabulary-content">
-                  <span class="vocabulary-word">Blanket</span>
-                  <span class="vocabulary-transcription">/ˈblæŋ.kɪt/</span>
-                  <span class="vocabulary-translation">Көрпе</span>
-                  <p class="vocabulary-definition">A large piece of cloth used to keep warm or sit on.</p>
-                </div>
-              </label>
-            </div>
-
-            <div class="vocabulary-item">
-              <label class="vocabulary-checkbox">
-                <input type="checkbox">
-                <span class="checkmark"></span>
-                <div class="vocabulary-content">
-                  <span class="vocabulary-word">Ant</span>
-                  <span class="vocabulary-transcription">/ænt/</span>
-                  <span class="vocabulary-translation">Құмырсқа</span>
-                  <p class="vocabulary-definition">A small insect that lives in large groups.</p>
-                </div>
-              </label>
-            </div>
           </div>
         </div>
       </div>
@@ -512,34 +448,38 @@
             <div class="question-item">
               <p class="question-text">1. Where did Peppa and her family go for the picnic?</p>
               <div class="answer-options">
-                <label class="answer-option">
-                  <input type="radio" name="q1" value="a">
-                  <span>To the beach</span>
-                </label>
-                <label class="answer-option">
-                  <input type="radio" name="q1" value="b">
+                <label class="answer-option" data-correct="true">
+                  <input type="radio" name="q1" value="park">
                   <span>To the park</span>
                 </label>
                 <label class="answer-option">
-                  <input type="radio" name="q1" value="c">
+                  <input type="radio" name="q1" value="beach">
+                  <span>To the beach</span>
+                </label>
+                <label class="answer-option">
+                  <input type="radio" name="q1" value="forest">
                   <span>To the forest</span>
                 </label>
               </div>
             </div>
 
             <div class="question-item">
-              <p class="question-text">2. What did they bring in the basket?</p>
+              <p class="question-text">2. What did they bring in the basket? (Select all that apply)</p>
               <div class="answer-options">
-                <label class="answer-option">
-                  <input type="checkbox" name="q2" value="a">
+                <label class="answer-option" data-correct="true">
+                  <input type="checkbox" name="q2" value="sandwiches">
                   <span>Sandwiches</span>
                 </label>
-                <label class="answer-option">
-                  <input type="checkbox" name="q2" value="b">
+                <label class="answer-option" data-correct="true">
+                  <input type="checkbox" name="q2" value="juice">
                   <span>Juice</span>
                 </label>
                 <label class="answer-option">
-                  <input type="checkbox" name="q2" value="c">
+                  <input type="checkbox" name="q2" value="pizza">
+                  <span>Pizza</span>
+                </label>
+                <label class="answer-option" data-correct="true">
+                  <input type="checkbox" name="q2" value="cake">
                   <span>Cake</span>
                 </label>
               </div>
@@ -549,95 +489,31 @@
               <p class="question-text">3. Who found the ants?</p>
               <div class="answer-options">
                 <label class="answer-option">
-                  <input type="radio" name="q3" value="a">
+                  <input type="radio" name="q3" value="peppa">
                   <span>Peppa</span>
                 </label>
-                <label class="answer-option">
-                  <input type="radio" name="q3" value="b">
+                <label class="answer-option" data-correct="true">
+                  <input type="radio" name="q3" value="george">
                   <span>George</span>
                 </label>
                 <label class="answer-option">
-                  <input type="radio" name="q3" value="c">
+                  <input type="radio" name="q3" value="daddy">
                   <span>Daddy Pig</span>
                 </label>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Grammar Section -->
-      <div class="accordion-section">
-        <div class="accordion-header">
-          <h3>Grammar ▼</h3>
-        </div>
-        <div class="accordion-content">
-          <div class="grammar-exercises">
-            <div class="grammar-item">
-              <p class="grammar-title">Present Simple Tense</p>
-              <p class="grammar-explanation">We use Present Simple to talk about habits and routines.</p>
-              
-              <div class="sentence-completion">
-                <p>Complete the sentences:</p>
-                <div class="sentence">
-                  Peppa <input type="text" class="grammar-input" placeholder="(to like)"> picnics.
-                </div>
-                <div class="sentence">
-                  They <input type="text" class="grammar-input" placeholder="(to bring)"> food in a basket.
-                </div>
-                <div class="sentence">
-                  George <input type="text" class="grammar-input" placeholder="(to play)"> with his toys.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Discussion Section -->
-      <div class="accordion-section">
-        <div class="accordion-header">
-          <h3>Discussion ▼</h3>
-        </div>
-        <div class="accordion-content">
-          <div class="discussion-questions">
-            <p class="discussion-title">Talk about these questions:</p>
-            <ul class="discussion-list">
-              <li>Do you like picnics? Why or why not?</li>
-              <li>What is your favorite food to bring on a picnic?</li>
-              <li>Where is the best place for a picnic in your city?</li>
-              <li>Have you ever had any funny experiences during a picnic?</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Script Section -->
-      <div class="accordion-section">
-        <div class="accordion-header">
-          <h3>Script ▼</h3>
-        </div>
-        <div class="accordion-content">
-          <div class="script-content">
-            <p class="script-line"><strong>Peppa:</strong> It's a lovely day for a picnic!</p>
-            <p class="script-line"><strong>Daddy Pig:</strong> Yes, let's go to the park.</p>
-            <p class="script-line"><strong>Mummy Pig:</strong> I'll pack some sandwiches and juice.</p>
-            <p class="script-line"><strong>George:</strong> Dinosaur! Grrr!</p>
-            <p class="script-line"><strong>Peppa:</strong> George, don't forget your toy dinosaur.</p>
-            <p class="script-line"><strong>Narrator:</strong> Peppa Pig and her family are going on a picnic.</p>
-            <p class="script-line"><strong>Peppa:</strong> Look, ants! They want to join our picnic too!</p>
-            <p class="script-line"><strong>Daddy Pig:</strong> Oh dear, we have some little visitors.</p>
-            <p class="script-line"><strong>Mummy Pig:</strong> Let's share our cake with them.</p>
-          </div>
+          <button class="check-answers-btn">Check Answers</button>
+          <div class="quiz-result" id="quizResult"></div>
         </div>
       </div>
     </div>
 
-    <!-- Progress and Navigation -->
     <div class="lesson-progress">
-      <a href="#" class="progress-btn" style="visibility: hidden;">Previous Lesson</a>
-      <div class="progress-info">Peppa Pig - Picnic Adventure</div>
-      <a href="peppa-pig-2.html" class="progress-btn">Next Lesson →</a>
+      <button class="progress-btn" id="prevBtn" disabled>Previous Lesson</button>
+      <div class="progress-info">Lesson 1 of 3</div>
+      <button class="progress-btn" id="nextBtn">Show Answers & Next Lesson</button>
     </div>
   </main>
 
@@ -649,8 +525,8 @@
       </div>
       <div class="footer-section">
         <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
         <a href="index.html#cartoons">Cartoons</a>
-        <a href="index.html#fairy">Fairy Tales</a>
         <a href="index.html#about">About</a>
       </div>
       <div class="footer-section">
@@ -665,10 +541,10 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Enhanced floating letters
+      // Floating letters
       const container = document.getElementById('floatingLetters');
       const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      const letterCount = 50;
+      const letterCount = 30;
       
       for (let i = 0; i < letterCount; i++) {
         const letter = document.createElement('div');
@@ -676,10 +552,9 @@
         letter.textContent = letters[Math.floor(Math.random() * letters.length)];
         letter.style.left = Math.random() * 100 + 'vw';
         letter.style.top = Math.random() * 100 + 'vh';
-        letter.style.animationDelay = Math.random() * 15 + 's';
-        letter.style.fontSize = (Math.random() * 30 + 10) + 'px';
-        letter.style.opacity = Math.random() * 0.4 + 0.1;
-        letter.style.animationDuration = (Math.random() * 20 + 20) + 's';
+        letter.style.animationDelay = Math.random() * 8 + 's';
+        letter.style.fontSize = (Math.random() * 25 + 12) + 'px';
+        letter.style.opacity = Math.random() * 0.3 + 0.1;
         container.appendChild(letter);
       }
 
@@ -691,7 +566,6 @@
           const content = this.nextElementSibling;
           const isActive = content.classList.contains('show');
           
-          // Close all accordions
           document.querySelectorAll('.accordion-content').forEach(acc => {
             acc.classList.remove('show');
           });
@@ -699,7 +573,6 @@
             h3.textContent = h3.textContent.replace('▲', '▼');
           });
           
-          // Toggle current accordion
           if (!isActive) {
             content.classList.add('show');
             this.querySelector('h3').textContent = this.querySelector('h3').textContent.replace('▼', '▲');
@@ -710,7 +583,6 @@
       // Vocabulary checkboxes
       const vocabCheckboxes = document.querySelectorAll('.vocabulary-checkbox input');
       vocabCheckboxes.forEach(checkbox => {
-        // Load saved state
         const word = checkbox.closest('.vocabulary-item').querySelector('.vocabulary-word').textContent;
         const savedState = localStorage.getItem(`peppa_${word}`);
         if (savedState === 'checked') {
@@ -730,6 +602,109 @@
             localStorage.setItem(`peppa_${word}`, 'unchecked');
           }
         });
+      });
+
+      // Answer selection
+      const answerOptions = document.querySelectorAll('.answer-option');
+      let answersChecked = false;
+
+      answerOptions.forEach(option => {
+        const input = option.querySelector('input');
+        
+        option.addEventListener('click', function() {
+          if (answersChecked) return;
+          
+          if (input.type === 'radio') {
+            // For radio buttons, deselect all others in the same question
+            const question = this.closest('.question-item');
+            question.querySelectorAll('.answer-option').forEach(opt => {
+              opt.classList.remove('selected');
+            });
+          }
+          
+          if (input.type === 'checkbox') {
+            input.checked = !input.checked;
+          } else {
+            input.checked = true;
+          }
+          
+          this.classList.toggle('selected', input.checked);
+        });
+      });
+
+      // Check answers button
+      const checkAnswersBtn = document.querySelector('.check-answers-btn');
+      const quizResult = document.getElementById('quizResult');
+      const nextBtn = document.getElementById('nextBtn');
+
+      checkAnswersBtn.addEventListener('click', function() {
+        answersChecked = true;
+        let correctAnswers = 0;
+        let totalQuestions = 0;
+
+        document.querySelectorAll('.question-item').forEach(question => {
+          totalQuestions++;
+          const correctOptions = question.querySelectorAll('.answer-option[data-correct="true"]');
+          let questionCorrect = true;
+
+          correctOptions.forEach(correctOption => {
+            const input = correctOption.querySelector('input');
+            if (!input.checked) {
+              questionCorrect = false;
+            }
+          });
+
+          // Check for incorrect selections
+          const allOptions = question.querySelectorAll('.answer-option');
+          allOptions.forEach(option => {
+            const input = option.querySelector('input');
+            const isCorrect = option.dataset.correct === 'true';
+            
+            if (input.checked) {
+              if (isCorrect) {
+                option.classList.add('correct');
+              } else {
+                option.classList.add('incorrect');
+                questionCorrect = false;
+              }
+            } else if (isCorrect) {
+              option.classList.add('correct');
+            }
+          });
+
+          if (questionCorrect) {
+            correctAnswers++;
+          }
+        });
+
+        const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+        
+        quizResult.style.display = 'block';
+        if (percentage === 100) {
+          quizResult.className = 'quiz-result success';
+          quizResult.innerHTML = `🎉 Perfect! You got ${correctAnswers}/${totalQuestions} correct!`;
+        } else if (percentage >= 70) {
+          quizResult.className = 'quiz-result success';
+          quizResult.innerHTML = `👍 Good job! You got ${correctAnswers}/${totalQuestions} correct!`;
+        } else {
+          quizResult.className = 'quiz-result error';
+          quizResult.innerHTML = `📚 Keep practicing! You got ${correctAnswers}/${totalQuestions} correct.`;
+        }
+
+        checkAnswersBtn.style.display = 'none';
+      });
+
+      // Next button functionality
+      nextBtn.addEventListener('click', function() {
+        if (!answersChecked) {
+          checkAnswersBtn.click();
+          return;
+        }
+        
+        // Show completion message
+        alert('🎉 Lesson completed! Moving to next lesson...');
+        // In a real app, this would navigate to the next lesson
+        // window.location.href = 'peppa-pig-2.html';
       });
     });
   </script>
